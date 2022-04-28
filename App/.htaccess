@@ -1,0 +1,6 @@
+# mzAPI generated APACHE SETTINGS DO NOT EDIT
+Options -Indexes
+RewriteEngine On
+Options -Multiviews
+RewriteRule ^_assets/(.*)$ $1 [QSA,END]
+RewriteRule ^(.*)$ index.php?mzAppURL=$1 [QSA,END]

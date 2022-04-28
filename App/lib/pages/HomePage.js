@@ -1,0 +1,70 @@
+// packages
+class HomePage extends mzAppWidget {
+  test = 0;
+
+  constructor() {
+    super();
+    new mzMetadata({
+      tabTitle: "home",
+      tabIcon: "https://exabytellc.com/_assets/media/logo.png",
+    });
+  }
+
+  build() {
+    return new mzScaffold({
+      body: new mzContainer({
+        styling: [
+          new mzSize(null, 100),
+          new mzShadow(3),
+          new mzPadding().symmetric(10, 20),
+          new mzMargin(10),
+          new mzCorner(10),
+        ],
+        child: new mzFlex({
+          type: mzFlex.type.column,
+          children: [
+            new mzExpand({
+              child: new mzImage({
+                src: "https://exabytellc.com/_assets/media/logo.png",
+                styling: [new mzSize(null, null)],
+              }),
+            }),
+            new mzExpand({
+              child: new mzText({ text: "hi" }),
+            }),
+
+            new mzButton({
+              onclick: () => {
+                mzApp.routes.navigate("/login");
+              },
+              child: new mzText({
+                text: "access",
+              }),
+            }),
+
+            new mzButton({
+              onclick: () => {
+                this.test++;
+                this.setState();
+              },
+              child: new mzText({
+                text: this.test,
+              }),
+              styling: [
+                new mzSize(this.test * 10),
+                new mzColor("#fff", "#123456"),
+              ],
+            }),
+
+            new mzInput({
+              hint: "hint",
+              onchanged: (event) => {
+                console.log(event.target.value);
+              },
+            }),
+          ],
+        }),
+      }),
+    });
+  }
+}

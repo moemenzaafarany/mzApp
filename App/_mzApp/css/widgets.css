@@ -1,0 +1,160 @@
+/*=======================*/
+mzapp-root {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+mzapp-root * {
+  display: block;
+  overflow: hidden;
+}
+/*=======================*/
+mzapp-widget {
+  display: contents;
+}
+/*=======================*/
+mzapp-scaffold {
+  position: relative;
+  width: 100%;
+  min-height: 100%;
+  overflow: auto;
+}
+/*=======================*/
+mzapp-scaffold mzapp-topbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+}
+/*=======================*/
+mzapp-flex {
+  flex: 1 0 max-content;
+  display: flex;
+  flex-wrap: nowrap;
+  max-height: 100%;
+  max-width: 100%;
+  width: 100%;
+  height: 100%;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+mzapp-flex.row {
+  flex-direction: row;
+}
+mzapp-flex.column {
+  flex-direction: column;
+}
+mzapp-flex.wrap {
+  flex-wrap: wrap;
+}
+mzapp-flex.shrink {
+  width: auto;
+  height: auto;
+}
+
+mzapp-flex.main-start {
+  justify-content: flex-start;
+}
+mzapp-flex.main-end {
+  justify-content: flex-end;
+}
+mzapp-flex.main-center {
+  justify-content: center;
+}
+mzapp-flex.main-baseline {
+  justify-content: baseline;
+}
+mzapp-flex.main-stretch {
+  justify-content: stretch;
+}
+mzapp-flex.main-around {
+  justify-content: space-around;
+}
+mzapp-flex.main-between {
+  justify-content: space-between;
+}
+mzapp-flex.main-evenly {
+  justify-content: space-evenly;
+}
+
+mzapp-flex.cross-start {
+  align-items: flex-start;
+}
+mzapp-flex.cross-end {
+  align-items: flex-end;
+}
+mzapp-flex.cross-center {
+  align-items: center;
+}
+mzapp-flex.cross-baseline {
+  align-items: baseline;
+}
+mzapp-flex.cross-stretch {
+  align-items: stretch;
+}
+
+mzapp-flex .mzFlexExpand {
+  justify-self: stretch;
+  align-self: stretch;
+}
+/*=======================*/
+mzapp-button {
+  cursor: pointer;
+  user-select: none;
+}
+mzapp-button * {
+  pointer-events: none;
+}
+/*=======================*/
+mzapp-icon {
+  font-family: "fontAwesomeBrands", "fontAwesomeRegular", "fontAwesomeSolid";
+}
+/*=======================*/
+mzapp-image {
+  display: contents;
+}
+mzapp-image img {
+  pointer-events: none;
+  user-select: none;
+  max-width: 100%;
+  max-height: 100%;
+}
+mzapp-image.cover img {
+  object-fit: cover;
+}
+mzapp-image.contain img {
+  object-fit: contain;
+}
+mzapp-image.fill img {
+  object-fit: fill;
+}
+mzapp-image.scale-down img {
+  object-fit: scale-down;
+}
+
+mzapp-image.center img {
+  object-position: center;
+}
+mzapp-image.top img {
+  object-position: top;
+}
+mzapp-image.bottom img {
+  object-position: bottom;
+}
+mzapp-image.left img {
+  object-position: left;
+}
+mzapp-image.right img {
+  object-position: right;
+}
+/*=======================*/
+mzapp-input{
+  
+}
+
+mzapp-input input {
+  width: 100%;
+  -webkit-appearance: none;
+  min-width: 0;
+}
