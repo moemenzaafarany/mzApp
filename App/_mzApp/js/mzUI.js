@@ -93,6 +93,14 @@ class mzShadow extends mzUI {
     )}rem ${color}`;
   }
 
+  inset(elevation = 1, color = "rgba(0,0,0,0.25)") {
+    this.styles["box-shadow"] = `inset 0 ${mzUI.num(
+      elevation,
+      2
+    )}rem ${mzUI.num(elevation, 0.6)}rem ${color}`;
+    return this;
+  }
+
   none() {
     this.styles["box-shadow"] = null;
     return this;

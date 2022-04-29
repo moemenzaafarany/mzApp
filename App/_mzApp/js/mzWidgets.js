@@ -82,11 +82,11 @@ class mzWidget {
   }
   //
   renderElement() {
-    this.element.removeAttribute("class");
+    //this.element.removeAttribute("class");
     this.element.removeAttribute("style");
-    for (let attr of this.element.attributes) {
-      this.element.removeAttribute(attr);
-    }
+    //for (let attr of this.element.attributes) {
+    //  this.element.removeAttribute(attr);
+    //}
     // styling
     this.defaultStyling.forEach((s) => {
       if (s && s instanceof mzUI)
@@ -278,19 +278,23 @@ class mzImage extends mzWidget {
   }) {
     super();
     this.element = document.createElement("mzapp-image");
-    this.data = {
-      img: document.createElement("img"),
-    };
-    //
-    this.data.img.src = src;
     //
     this.classes[fit] = true;
     this.classes[position] = true;
     this.styling = styling;
-    this.children = [this.data.img];
+    this.children = [new mzImg({ src: src })];
   }
 }
-//========================== loader
+class mzImg extends mzWidget {
+  constructor({ src }) {
+    super();
+    this.element = document.createElement("img");
+    this.nodeAttrs = {
+      src: src,
+    };
+  }
+}
+//========================== appBar
 class mzAppBar extends mzWidget {
   constructor({ child = null, styling = [] }) {
     super();
@@ -309,9 +313,10 @@ class mzLoader extends mzWidget {
     this.styling = styling;
   }
 }
-//========================== loader
+//========================== Input Field
 class mzInputField extends mzWidget {
   constructor({
+    formGroup = null,
     label = "",
     hint = "",
     value = "",
@@ -324,16 +329,43 @@ class mzInputField extends mzWidget {
     super();
     this.element = document.createElement("mzapp-input");
     //
-    this.defaultStyling = [
-      new mzPadding().symmetric(2.5, 5),
-      new mzMargin(2.5),
-      new mzShadow(1),
-      new mzCorner(2),
-      new mzBorder(1, mzData.borderType.solid, mzColor.fromHEX("#333", 0.1)),
-      new mzColor(null, mzData.colors.White),
-    ];
-    //
+    // this.defaultStyling = [
+    //   new mzPadding().symmetric(2.5, 5),
+    //   new mzMargin(2.5),
+    //   new mzShadow().inset(1),
+    //   new mzCorner(2),
+    //   new mzBorder(1, mzData.borderType.solid, "rgba(0,0,0,0.2)"),
+    //   new mzColor(null, mzData.colors.White),
+    // ];
+    // //
     this.children = [
+      new mzFieldset({
+        label: label,
+        hint: hint,
+        value: value,
+        onchanged: onchanged,
+        validator: validator,
+      }),
+      error ? new mzText({ text: error }) : null,
+    ];
+    this.classes["disabled"] = disabled;
+    this.styling = styling;
+  }
+}
+
+class mzFieldset extends mzWidget {
+  constructor({
+    label = "",
+    hint = "",
+    value = "",
+    onchanged = null,
+    validator = null,
+    styling = [],
+  }) {
+    super();
+    this.element = document.createElement("mzapp-field");
+    this.children = [
+      new mzFieldsetLegend({ text: label }),
       new mzInput({
         hint: hint,
         value: value,
@@ -341,8 +373,16 @@ class mzInputField extends mzWidget {
         validator: validator,
       }),
     ];
-    this.classes["disabled"] = disabled;
-    this.styling = styling;
+  }
+}
+
+class mzFieldsetLegend extends mzWidget {
+  constructor({ text = "", styling = [] }) {
+    super();
+    this.element = document.createElement("mzapp-label");
+    this.nodeAttrs = {
+      innerText: text,
+    };
   }
 }
 
@@ -362,9 +402,17 @@ class mzInput extends mzWidget {
     };
     this.nodeAttrs = {
       value: value,
-      onkeyup: onchanged ? () => onchanged(this.element.value) : null,
-      validator: validator ? () => validator(this.element.value) : null,
+      onchange: onchanged ? (evt) => onchanged(evt.target.value) : null,
+      onkeyup: onchanged ? (evt) => onchanged(evt.target.value) : null,
+      validator: validator ? (evt) => validator(evt.target.value) : null,
     };
-    console.log(this.element.value, "-", value);
   }
 }
+
+/*
+
+<fieldset>
+  <legend>Personalia:</legend>
+  <input type="text" id="fname" name="fname">
+ </fieldset>
+*/

@@ -33,7 +33,7 @@ mzapp-widget {
 mzapp-scaffold {
   position: relative;
   width: 100%;
-  min-height: 100%;
+  height: 100%;
 }
 /*=======================*/
 mzapp-scaffold mzapp-topbar {
@@ -246,10 +246,75 @@ mzapp-image.right img {
 }
 /*=======================*/
 mzapp-input {
+  --bg: #fff;
+  --bs: 0.1rem;
+  --bc: rgba(0, 0, 0, 0.1);
+  --bf: rgba(0, 0, 255, 0.5);
+  --be: rgba(255, 0, 0, 0.5);
+  overflow: visible;
+  padding-top: 0.5rem;
 }
 
-mzapp-input input {
+mzapp-input mzapp-field {
+  display: grid;
+  overflow: visible;
+  background-color: var(--bg);
+}
+
+mzapp-input mzapp-field > * {
+  grid-area: group;
+}
+
+mzapp-input mzapp-field mzapp-label {
+  display: inline-block;
+  align-self: flex-start;
+  transform: translate(0, 0);
+  padding: 0.2rem 0.4rem;
+  border: var(--bs) solid transparent;
+  pointer-events: none;
+  background-color: transparent;
+  width: max-content;
+}
+
+mzapp-input mzapp-field input {
+  padding: 0.2rem 0.4rem;
   width: 100%;
+  border: var(--bs) solid var(--bc);
   -webkit-appearance: none;
-  min-width: 0;
+  min-width: unset;
+}
+
+mzapp-input mzapp-field.focus input {
+  border-color: var(--bf);
+  padding-top: 0.5rem;
+}
+
+mzapp-input mzapp-field.focus mzapp-label {
+  transform: translate(0.5rem, -50%);
+  padding: 0 0.1rem;
+  border-width: 0;
+  background-color: var(--bg);
+}
+
+mzapp-input mzapp-field.value mzapp-label {
+  transform: translate(0.5rem, -50%);
+  padding: 0 0.1rem;
+  border-width: 0;
+  background-color: var(--bg);
+}
+
+mzapp-input mzapp-field.value input {
+  padding-top: 0.5rem;
+}
+
+mzapp-input mzapp-field input::placeholder {
+  opacity: 0;
+}
+
+mzapp-input mzapp-field.focus input:focus::placeholder {
+  opacity: 1;
+}
+
+mzapp-input mzapp-field.error input {
+  border-color: var(--be);
 }

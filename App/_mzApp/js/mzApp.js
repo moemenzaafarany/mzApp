@@ -302,3 +302,42 @@ class mzData {
     YellowGreen: "#9ACD32",
   };
 }
+//========================== event Listners
+(function () {
+  document.mzListen(
+    "focus",
+    (evt) => {
+      let el = evt.target;
+      console.log(el);
+      if (el.matches("mzapp-field input")) {
+        el.parentNode.classList.add("focus");
+      }
+    },
+    true
+  );
+
+  document.mzListen(
+    "blur",
+    (evt) => {
+      let el = evt.target;
+      console.log(el);
+      if (el.matches("mzapp-field input")) {
+        el.parentNode.classList.remove("focus");
+      }
+    },
+    true
+  );
+
+  document.mzListen(
+    "change",
+    (evt) => {
+      let el = evt.target;
+      console.log(el);
+      if (el.matches("mzapp-field input")) {
+        if (el.value) el.parentNode.classList.add("value");
+        else el.parentNode.classList.remove("value");
+      }
+    },
+    true
+  );
+})();

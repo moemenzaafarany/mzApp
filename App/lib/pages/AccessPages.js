@@ -9,19 +9,21 @@ export class LoginPage extends mzWidget {
   build() {
     return new mzScaffold({
       body: new mzCenter({
-        child: new mzFlex({
-          direction: mzData.flexDirection.column,
-          children: [
-            new mzInputField({
-              hint: "email",
-              value: this.email,
-              onchanged: (value) => {
-                console.log(value);
-                this.email = value;
-                this.setState();
-              },
-            }),
-          ],
+        child: new mzContainer({
+          child: new mzFlex({
+            direction: mzData.flexDirection.column,
+            children: [
+              new mzInputField({
+                label: "login",
+                hint: "email",
+                value: this.email,
+                onchanged: (value) => {
+                  this.email = value;
+                  this.setState();
+                },
+              }),
+            ],
+          }),
         }),
       }),
     });
