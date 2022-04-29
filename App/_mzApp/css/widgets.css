@@ -1,13 +1,29 @@
 /*=======================*/
-mzapp-root {
+mzapp-root,
+mzapp-modals {
+  position: fixed;
   display: block;
   width: 100%;
   height: 100%;
   overflow: auto;
 }
-mzapp-root * {
+mzapp-root *,
+mzapp-modals * {
+  position: static;
   display: block;
   overflow: hidden;
+}
+/*=======================*/
+mzapp-modals {
+  pointer-events: none;
+  background-color: transparent;
+}
+mzapp-modals.show {
+  pointer-events: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+mzapp-modals * {
+  pointer-events: auto;
 }
 /*=======================*/
 mzapp-widget {
@@ -18,7 +34,6 @@ mzapp-scaffold {
   position: relative;
   width: 100%;
   min-height: 100%;
-  overflow: auto;
 }
 /*=======================*/
 mzapp-scaffold mzapp-topbar {
@@ -28,7 +43,21 @@ mzapp-scaffold mzapp-topbar {
   bottom: 0;
 }
 /*=======================*/
-mzapp-flex {
+mzapp-center {
+  flex: 1 0 max-content;
+  display: flex;
+  flex-wrap: nowrap;
+  max-height: 100%;
+  max-width: 100%;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+/*=======================*/
+mzapp-flex,
+mzapp-stack {
   flex: 1 0 max-content;
   display: flex;
   flex-wrap: nowrap;
@@ -38,12 +67,27 @@ mzapp-flex {
   height: 100%;
   justify-content: flex-start;
   align-items: flex-start;
+  row-gap: 0.25rem;
+  column-gap: 0.25rem;
 }
+mzapp-stack {
+  position: relative;
+}
+mzapp-stack > * {
+  position: absolute;
+}
+
 mzapp-flex.row {
   flex-direction: row;
 }
 mzapp-flex.column {
   flex-direction: column;
+}
+mzapp-flex.row-reverse {
+  flex-direction: row-reverse;
+}
+mzapp-flex.column-reverse {
+  flex-direction: column-reverse;
 }
 mzapp-flex.wrap {
   flex-wrap: wrap;
@@ -53,53 +97,105 @@ mzapp-flex.shrink {
   height: auto;
 }
 
-mzapp-flex.main-start {
+mzapp-flex.main-start,
+mzapp-stack.main-start {
   justify-content: flex-start;
+  align-content: flex-start;
 }
-mzapp-flex.main-end {
+mzapp-flex.main-end,
+mzapp-stack.main-end {
   justify-content: flex-end;
+  align-content: flex-end;
 }
-mzapp-flex.main-center {
+mzapp-flex.main-center,
+mzapp-stack.main-center {
   justify-content: center;
+  align-content: center;
 }
-mzapp-flex.main-baseline {
+mzapp-flex.main-baseline,
+mzapp-stack.main-baseline {
   justify-content: baseline;
 }
 mzapp-flex.main-stretch {
   justify-content: stretch;
+  align-content: stretch;
 }
 mzapp-flex.main-around {
   justify-content: space-around;
+  align-content: space-around;
 }
 mzapp-flex.main-between {
   justify-content: space-between;
+  align-content: space-between;
 }
 mzapp-flex.main-evenly {
   justify-content: space-evenly;
 }
 
-mzapp-flex.cross-start {
+mzapp-flex.cross-start,
+mzapp-stack.cross-start {
   align-items: flex-start;
 }
-mzapp-flex.cross-end {
+mzapp-flex.cross-end,
+mzapp-stack.cross-end {
   align-items: flex-end;
 }
-mzapp-flex.cross-center {
+mzapp-flex.cross-center,
+mzapp-stack.cross-center {
   align-items: center;
 }
-mzapp-flex.cross-baseline {
+mzapp-flex.cross-baseline,
+mzapp-stack.cross-baseline {
   align-items: baseline;
 }
 mzapp-flex.cross-stretch {
   align-items: stretch;
 }
-
 mzapp-flex .mzFlexExpand {
   justify-self: stretch;
   align-self: stretch;
 }
 /*=======================*/
+mzapp-text {
+  word-wrap: normal;
+  word-break: normal;
+}
+
+mzapp-text.start {
+  text-align: start;
+}
+mzapp-text.end {
+  text-align: end;
+}
+mzapp-text.center {
+  text-align: center;
+}
+mzapp-text.justify {
+  text-align: justify;
+}
+mzapp-text.wrap {
+  white-space: normal;
+  text-overflow: clip;
+}
+mzapp-text.clip {
+  white-space: nowrap;
+  text-overflow: clip;
+}
+mzapp-text.ellipses {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+mzapp-text.fade {
+  position: relative;
+  white-space: normal;
+  text-overflow: clip;
+}
+/*=======================*/
 mzapp-button {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
   user-select: none;
 }
@@ -149,8 +245,7 @@ mzapp-image.right img {
   object-position: right;
 }
 /*=======================*/
-mzapp-input{
-  
+mzapp-input {
 }
 
 mzapp-input input {

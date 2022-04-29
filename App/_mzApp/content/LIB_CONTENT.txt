@@ -1,9 +1,22 @@
+// mzWeb init
+new mzApp({
+  routes: new mzRoutes({
+    routes: {
+      "/home": new HomePage(),
+    },
+    home: "/home",
+    fallback: new HomePage(),
+  }),
+});
+
 // packages
-class AccessPage extends mzAppWidget {
+class HomePage extends mzWidget {
   test = 0;
 
   constructor() {
     super();
+
+    this.element = this.build();
   }
 
   build() {
@@ -17,7 +30,7 @@ class AccessPage extends mzAppWidget {
           new mzCorner(10),
         ],
         child: new mzFlex({
-          type: mzFlex.type.row,
+          type: mzFlex.type.column,
           children: [
             new mzExpand({
               child: new mzImage({
@@ -25,13 +38,16 @@ class AccessPage extends mzAppWidget {
                 styling: [new mzSize(null, null)],
               }),
             }),
+            new mzExpand({
+              child: new mzText({ text: "hi" }),
+            }),
 
             new mzButton({
               onclick: () => {
-                mzApp.routes.navigate("/home");
+                mzApp.routes.navigate("/login");
               },
               child: new mzText({
-                text: "home",
+                text: "access",
               }),
             }),
 
@@ -43,6 +59,17 @@ class AccessPage extends mzAppWidget {
               child: new mzText({
                 text: this.test,
               }),
+              styling: [
+                new mzSize(this.test * 10),
+                new mzColor("#fff", "#123456"),
+              ],
+            }),
+
+            new mzInput({
+              hint: "hint",
+              onchanged: (event) => {
+                console.log(event.target.value);
+              },
             }),
           ],
         }),

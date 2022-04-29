@@ -1,13 +1,14 @@
+import { LoginPage } from "./pages/AccessPages.js";
+import { HomePage } from "./pages/homepage.js";
+
 // mzWeb init
 new mzApp({
   routes: new mzRoutes({
     routes: {
-      "/home": new HomePage(),
-      "/login": new AccessPage(),
+      [HomePage.route]: new HomePage(),
+      [LoginPage.route]: new LoginPage(),
     },
-    home: "/home",
+    home: HomePage.route,
     fallback: new HomePage(),
   }),
 });
-
-var globalTest = 1;
