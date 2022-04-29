@@ -20,7 +20,6 @@ mzapp-modals {
 }
 mzapp-modals.show {
   pointer-events: auto;
-  background-color: rgba(0, 0, 0, 0.5);
 }
 mzapp-modals * {
   pointer-events: auto;
@@ -54,7 +53,6 @@ mzapp-center {
   justify-content: center;
   align-items: center;
 }
-
 /*=======================*/
 mzapp-flex,
 mzapp-stack {
@@ -248,9 +246,11 @@ mzapp-image.right img {
 mzapp-input {
   --bg: #fff;
   --bs: 0.1rem;
+  --bs: 0.1rem;
   --bc: rgba(0, 0, 0, 0.1);
   --bf: rgba(0, 0, 255, 0.5);
   --be: rgba(255, 0, 0, 0.5);
+
   overflow: visible;
   padding-top: 0.5rem;
 }

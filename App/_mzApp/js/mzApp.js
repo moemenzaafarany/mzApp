@@ -4,6 +4,8 @@ class mzApp {
   // variables
   static routes;
   static html = {
+    html: null,
+    body: null,
     tab: {
       title: null,
       icon: null,
@@ -14,6 +16,8 @@ class mzApp {
   // constructor
   constructor({ routes = null }) {
     window.onload = () => {
+      mzApp.html.html = document.documentElement;
+      mzApp.html.body = document.body;
       mzApp.html.tab.title = document.title;
       mzApp.html.tab.icon = document.getElementById("mzapp-tab-icon");
       mzApp.html.root = document.querySelector("body mzapp-root");
@@ -51,6 +55,10 @@ class mzApp {
     if (typeof title !== "undefined") document.title = title;
     if (typeof icon !== "undefined")
       mzApp.html.tab.icon.setAttribute("href", icon);
+  }
+  //
+  static getDIR() {
+    return this.html.html.getAttribute("dir") || "ltr";
   }
 }
 //========================== mzRoutes

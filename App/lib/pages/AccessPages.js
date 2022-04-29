@@ -10,12 +10,13 @@ export class LoginPage extends mzWidget {
     return new mzScaffold({
       body: new mzCenter({
         child: new mzContainer({
+          padding: mzPadding.all(10),
           child: new mzFlex({
             direction: mzData.flexDirection.column,
             children: [
               new mzInputField({
-                label: "login",
-                hint: "email",
+                label: "email",
+                hint: "enter your email here",
                 value: this.email,
                 onchanged: (value) => {
                   this.email = value;

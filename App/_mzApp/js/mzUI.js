@@ -7,214 +7,342 @@ class mzUI {
 
   styles = {};
   classes = {};
-  apply = null;
 
-  constructor() {}
+  constructor({ styles, classes }) {
+    this.styles = styles;
+    this.classes = classes;
+  }
 }
 /*=========================*/
 class mzSize extends mzUI {
-  constructor(width = null, height = null) {
+  constructor() {
     super();
-    if (width) this.styles["width"] = `${mzUI.num(width)}rem`;
-    if (height) this.styles["height"] = `${mzUI.num(height)}rem`;
   }
 
-  percent(width = null, height = null) {
-    if (width) this.styles["width"] = `${mzUI.num(width, 0)}%`;
-    if (height) this.styles["height"] = `${mzUI.num(height, 0)}%`;
-    return this;
+  static none = new mzUI({
+    styles: { width: null, height: null },
+  });
+
+  static value(width = null, height = null) {
+    return new mzUI({
+      styles: {
+        width: width ? `${mzUI.num(width)}rem` : null,
+        height: height ? `${mzUI.num(height)}rem` : null,
+      },
+    });
   }
 
-  none() {
-    this.styles["width"] = null;
-    this.styles["height"] = null;
-    return this;
+  static percent(width = null, height = null) {
+    return new mzUI({
+      styles: {
+        width: width ? `${mzUI.num(width)}%` : null,
+        height: height ? `${mzUI.num(height)}%` : null,
+      },
+    });
   }
 }
 /*=========================*/
 class mzPadding extends mzUI {
-  constructor(all = null) {
+  constructor() {
     super();
-    if (all) this.styles["padding"] = `${mzUI.num(all)}rem`;
   }
 
-  symmetric(vertical = null, horizontal = null) {
-    this.styles["padding"] = `${mzUI.num(vertical)}rem ${mzUI.num(
-      horizontal
-    )}rem`;
-    return this;
+  static none = new mzUI({
+    styles: { padding: null },
+  });
+
+  static all(value = null) {
+    return new mzUI({
+      styles: { padding: `${mzUI.num(value)}rem` },
+    });
   }
 
-  TLBR(top = null, right = null, bottom = null, left = null) {
-    this.styles["padding"] = `${mzUI.num(top)}rem ${mzUI.num(
-      right
-    )}rem ${mzUI.num(bottom)}rem ${mzUI.num(left)}rem`;
-    return this;
+  static symmetric(vertical = null, horizontal = null) {
+    return new mzUI({
+      styles: {
+        padding: `${mzUI.num(vertical)}rem ${mzUI.num(horizontal)}rem`,
+      },
+    });
   }
 
-  none() {
-    this.styles["padding"] = null;
-    return this;
+  static TRBL(top = null, right = null, bottom = null, left = null) {
+    return new mzUI({
+      styles: {
+        padding: `${mzUI.num(top)}rem ${mzUI.num(right)}rem ${mzUI.num(
+          bottom
+        )}rem ${mzUI.num(left)}rem`,
+      },
+    });
+  }
+
+  static TSBE(top = null, start = null, bottom = null, end = null) {
+    return new mzUI({
+      styles: {
+        padding:
+          mzApp.getDIR() == "ltr"
+            ? `${mzUI.num(top)}rem ${mzUI.num(end)}rem ${mzUI.num(
+                bottom
+              )}rem ${mzUI.num(start)}rem`
+            : `${mzUI.num(top)}rem ${mzUI.num(start)}rem ${mzUI.num(
+                bottom
+              )}rem ${mzUI.num(end)}rem`,
+      },
+    });
   }
 }
 /*=========================*/
 class mzMargin extends mzUI {
-  constructor(all = null) {
+  constructor() {
     super();
-    if (all) this.styles["margin"] = `${mzUI.num(all)}rem`;
   }
 
-  symmetric(vertical = null, horizontal = null) {
-    this.styles["margin"] = `${mzUI.num(vertical)}rem ${mzUI.num(
-      horizontal
-    )}rem`;
-    return this;
+  static none = new mzUI({
+    styles: { margin: null },
+  });
+
+  static all(value = null) {
+    return new mzUI({
+      styles: { margin: `${mzUI.num(value)}rem` },
+    });
   }
 
-  TLBR(top = null, right = null, bottom = null, left = null) {
-    this.styles["margin"] = `${mzUI.num(top)}rem ${mzUI.num(
-      right
-    )}rem ${mzUI.num(bottom)}rem ${mzUI.num(left)}rem`;
-    return this;
+  static symmetric(vertical = null, horizontal = null) {
+    return new mzUI({
+      styles: { margin: `${mzUI.num(vertical)}rem ${mzUI.num(horizontal)}rem` },
+    });
   }
 
-  none() {
-    this.styles["margin"] = null;
-    return this;
+  static TRBL(top = null, right = null, bottom = null, left = null) {
+    return new mzUI({
+      styles: {
+        margin: `${mzUI.num(top)}rem ${mzUI.num(right)}rem ${mzUI.num(
+          bottom
+        )}rem ${mzUI.num(left)}rem`,
+      },
+    });
+  }
+
+  static TSBE(top = null, start = null, bottom = null, end = null) {
+    return new mzUI({
+      styles: {
+        margin:
+          mzApp.getDIR() == "ltr"
+            ? `${mzUI.num(top)}rem ${mzUI.num(end)}rem ${mzUI.num(
+                bottom
+              )}rem ${mzUI.num(start)}rem`
+            : `${mzUI.num(top)}rem ${mzUI.num(start)}rem ${mzUI.num(
+                bottom
+              )}rem ${mzUI.num(end)}rem`,
+      },
+    });
   }
 }
 /*=========================*/
 class mzShadow extends mzUI {
-  constructor(elevation = 1, color = "rgba(0,0,0,0.25)") {
+  constructor() {
     super();
-    this.styles["box-shadow"] = `0 ${mzUI.num(elevation, 2)}rem ${mzUI.num(
-      elevation,
-      0.6
-    )}rem ${color}`;
   }
 
-  inset(elevation = 1, color = "rgba(0,0,0,0.25)") {
-    this.styles["box-shadow"] = `inset 0 ${mzUI.num(
-      elevation,
-      2
-    )}rem ${mzUI.num(elevation, 0.6)}rem ${color}`;
-    return this;
+  static none = new mzUI({
+    styles: { boxShadow: null },
+  });
+
+  static set(elevation = 1, color = "rgba(0,0,0,0.25)") {
+    return new mzUI({
+      styles: {
+        boxShadow: `0 ${mzUI.num(elevation, 2)}rem ${mzUI.num(
+          elevation,
+          0.6
+        )}rem ${color}`,
+      },
+    });
   }
 
-  none() {
-    this.styles["box-shadow"] = null;
-    return this;
+  static inset(elevation = 1, color = "rgba(0,0,0,0.25)") {
+    return new mzUI({
+      styles: {
+        boxShadow: `inset 0 ${mzUI.num(elevation, 2)}rem ${mzUI.num(
+          elevation,
+          0.6
+        )}rem ${color}`,
+      },
+    });
   }
 }
 /*=========================*/
 class mzBorder extends mzUI {
-  constructor(
-    all = null,
+  constructor() {
+    super();
+  }
+
+  static none = new mzUI({
+    styles: { border: null, borderWidth: null },
+  });
+
+  static all(
+    value = null,
     style = mzData.borderType.solid,
     color = mzColor.from("#333", 0.5)
   ) {
-    super();
-    this.styles["border"] = `${mzUI.num(all)}rem ${style} ${color}`;
+    return new mzUI({
+      styles: { border: `${mzUI.num(value)}rem ${style} ${color}` },
+    });
   }
 
-  symmetric(
+  static symmetric(
     vertical = null,
     horizontal = null,
     style = mzData.borderType.solid,
     color = mzColor.from("#333", 0.5)
   ) {
-    this.styles["border"] = `0 ${style} ${color}`;
-    this.styles["border-width"] = `${mzUI.num(vertical)}rem ${mzUI.num(
-      horizontal
-    )}rem`;
-    return this;
+    return new mzUI({
+      styles: {
+        border: `0 ${style} ${color}`,
+        borderWidth: `${mzUI.num(vertical)}rem ${mzUI.num(horizontal)}rem`,
+      },
+    });
   }
 
-  TLBR(top = null, right = null, bottom = null, left = null) {
-    this.styles["border"] = `0 ${style} ${color}`;
-    this.styles["border-width"] = `${mzUI.num(top)}rem ${mzUI.num(
-      right
-    )}rem ${mzUI.num(bottom)}rem ${mzUI.num(left)}rem`;
-    return this;
+  static TRBL(
+    top = null,
+    right = null,
+    bottom = null,
+    left = null,
+    style = mzData.borderType.solid,
+    color = mzColor.from("#333", 0.5)
+  ) {
+    return new mzUI({
+      styles: {
+        border: `0 ${style} ${color}`,
+        borderWidth: `${mzUI.num(top)}rem ${mzUI.num(right)}rem ${mzUI.num(
+          bottom
+        )}rem ${mzUI.num(left)}rem`,
+      },
+    });
   }
 
-  none() {
-    this.styles["border"] = null;
-    this.styles["border-width"] = null;
-    return this;
+  static TRBL(
+    top = null,
+    start = null,
+    bottom = null,
+    end = null,
+    style = mzData.borderType.solid,
+    color = mzColor.from("#333", 0.5)
+  ) {
+    return new mzUI({
+      styles: {
+        border: `0 ${style} ${color}`,
+        borderWidth:
+          mzApp.getDIR() == "ltr"
+            ? `${mzUI.num(top)}rem ${mzUI.num(end)}rem ${mzUI.num(
+                bottom
+              )}rem ${mzUI.num(start)}rem`
+            : `${mzUI.num(top)}rem ${mzUI.num(start)}rem ${mzUI.num(
+                bottom
+              )}rem ${mzUI.num(end)}rem`,
+      },
+    });
   }
 }
 /*=========================*/
-class mzCorner extends mzUI {
-  constructor(all = null) {
+class mzRadius extends mzUI {
+  constructor() {
     super();
-    this.styles["border-radius"] = `${mzUI.num(all)}rem`;
   }
 
-  rounded(all = null) {
-    this.styles["border-radius"] = `${all}%`;
-    return this;
+  static none = new mzUI({
+    styles: { borderRadius: null },
+  });
+
+  static all(value = null) {
+    return new mzUI({
+      styles: { borderRadius: `${mzUI.num(value)}rem` },
+    });
   }
 
-  symmetric(vertical = null, horizontal = null) {
-    this.styles["border-radius"] = `${mzUI.num(vertical)}rem `;
-    this.styles["border-radius"] += `${mzUI.num(horizontal)}rem`;
-    return this;
+  static rounded(value = null) {
+    return new mzUI({
+      styles: { borderRadius: `${value}%` },
+    });
   }
 
-  TLBR(top = null, right = null, bottom = null, left = null) {
-    this.styles["border-radius"] = `${mzUI.num(top)}rem `;
-    this.styles["border-radius"] += `${mzUI.num(right)}rem  `;
-    this.styles["border-radius"] += `${mzUI.num(bottom)}rem`;
-    this.styles["border-radius"] += `${mzUI.num(left)}rem`;
-    return this;
+  static symmetric(vertical = null, horizontal = null) {
+    return new mzUI({
+      styles: {
+        borderRadius: `${mzUI.num(vertical)}rem ${mzUI.num(horizontal)}rem`,
+      },
+    });
   }
 
-  none() {
-    this.styles["border-radius"] = null;
-    return this;
+  static TRBL(top = null, right = null, bottom = null, left = null) {
+    return new mzUI({
+      styles: {
+        borderRadius: `${mzUI.num(top)}rem ${mzUI.num(right)}rem ${mzUI.num(
+          bottom
+        )}rem ${mzUI.num(left)}rem`,
+      },
+    });
+  }
+
+  static TSBE(top = null, start = null, bottom = null, end = null) {
+    return new mzUI({
+      styles: {
+        borderRadius:
+          mzApp.getDIR() == "ltr"
+            ? `${mzUI.num(top)}rem ${mzUI.num(end)}rem ${mzUI.num(
+                bottom
+              )}rem ${mzUI.num(start)}rem`
+            : `${mzUI.num(top)}rem ${mzUI.num(start)}rem ${mzUI.num(
+                bottom
+              )}rem ${mzUI.num(end)}rem`,
+      },
+    });
   }
 }
 /*=========================*/
 class mzFlexExpand extends mzUI {
-  constructor(grow = null, shrink = null, basis = null) {
+  constructor() {
     super();
-    this.styles["flex"] = `${grow || 1} `;
-    this.styles["flex"] += `${shrink || 0} `;
-    this.styles["flex"] += `${mzUI.num(basis)}rem`;
-    this.classes["mzFlexExpand"] = true;
   }
 
-  none() {
-    this.styles["flex"] = null;
-    this.classes["mzFlexExpand"] = false;
-    return this;
+  static none = new mzUI({
+    styles: { flex: null },
+    classes: { mzFlexExpand: false },
+  });
+
+  static set(grow = null, shrink = null, basis = null) {
+    return new mzUI({
+      styles: { flex: `${grow || 1} ${shrink || 0} ${mzUI.num(basis)}rem` },
+      classes: { mzFlexExpand: true },
+    });
   }
 }
 /*=========================*/
 class mzColor extends mzUI {
-  constructor(color = null, background = null) {
+  constructor() {
     super();
-    this.styles["color"] = color;
-    this.styles["background-color"] = background;
   }
 
-  none() {
-    this.styles["color"] = null;
-    this.styles["background-color"] = null;
-    return this;
+  static none = new mzUI({
+    styles: { color: null },
+  });
+
+  static set(color = null) {
+    return new mzUI({ styles: { color: color } });
+  }
+}
+
+/*=========================*/
+class mzBackground extends mzUI {
+  constructor() {
+    super();
   }
 
-  static fromHEX = (hexColor, opacity = 1) => {
-    if (opacity < 1) {
-      let result; //= "/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i".exec(hexColor);
-      if (!result) return hexColor;
-      result = [
-        parseInt(result[1], 16),
-        parseInt(result[2], 16),
-        parseInt(result[3], 16),
-      ];
-      return `rgba(${result[0]},${result[1]},${result[2]},${opacity})`;
-    } else return hexColor;
-  };
+  static none = new mzUI({
+    styles: { backgroundColor: null },
+  });
+
+  static set(color = null) {
+    return new mzUI({ styles: { backgroundColor: color } });
+  }
 }

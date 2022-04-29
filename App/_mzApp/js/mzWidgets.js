@@ -2,7 +2,6 @@
 //========================== mzWidget
 class mzWidget {
   element = null;
-  defaultStyling = [];
   children = [];
   classes = {};
   styles = {};
@@ -88,11 +87,6 @@ class mzWidget {
     //  this.element.removeAttribute(attr);
     //}
     // styling
-    this.defaultStyling.forEach((s) => {
-      if (s && s instanceof mzUI)
-        if (this.styling.findIndex((e) => e.constructor == s.constructor) == -1)
-          this.styling.push(s);
-    });
     for (let style of this.styling) {
       if (style instanceof mzUI) {
         for (let key in style.classes) {
@@ -132,27 +126,30 @@ class mzScaffold extends mzWidget {
     bottomBar = null,
     drawer = null,
     body = null,
-    styling = [],
+    background = mzBackground.set("#eee"),
   }) {
     super();
     this.element = document.createElement("mzapp-scaffold");
-    this.defaultStyling = [new mzColor(null, mzColor.fromHEX("#eee"))];
     this.children = [appBar, bottomBar, drawer, body];
-    this.styling = styling;
+    this.styling = [background];
   }
 }
 //========================== Container
 class mzContainer extends mzWidget {
   element = document.createElement("mzapp-container");
   //
-  constructor({ child = null, styling = [] }) {
+  constructor({
+    child = null,
+    padding = mzPadding.none,
+    margin = mzMargin.none,
+    border = mzBorder.none,
+    radius = mzRadius.all(2),
+    shadow = mzShadow.set(1),
+    background = mzBackground.set("#fff"),
+  }) {
     super();
-    this.defaultStyling = [
-      new mzShadow(1),
-      new mzColor(null, mzData.colors.White),
-    ];
     this.children = [child];
-    this.styling = styling;
+    this.styling = [padding, margin, border, radius, shadow, background];
   }
 }
 //========================== Flex
@@ -162,9 +159,10 @@ class mzFlex extends mzWidget {
     direction = mzData.flexDirection.row,
     mainAlignment = mzData.flexMainAlign.start,
     crossAlignment = mzData.flexCrossAlign.start,
+    rowGap = 0,
+    columnGap = 0,
     shrink = false,
     wrap = false,
-    styling = [],
   }) {
     super();
     this.element = document.createElement("mzapp-flex");
@@ -174,23 +172,17 @@ class mzFlex extends mzWidget {
     this.classes[direction] = true;
     this.classes["shrink"] = shrink;
     this.classes["wrap"] = wrap;
-    this.styling = styling;
+    this.styles["row-gap"] = rowGap;
+    this.styles["columnGap-gap"] = columnGap;
   }
 }
 //========================== Expand
 class mzExpand extends mzWidget {
-  constructor({
-    child = null,
-    grow = 1,
-    shrink = null,
-    basis = null,
-    styling = [],
-  }) {
+  constructor({ child = null, grow = 1, shrink = null, basis = null }) {
     super();
     this.element = document.createElement("mzapp-expand");
-    this.defaultStyling.push(new mzFlexExpand(grow, shrink, basis));
     this.children = [child];
-    this.styling = styling;
+    this.styling = [new mzFlexExpand(grow, shrink, basis)];
   }
 }
 //========================== Flex
@@ -199,23 +191,20 @@ class mzStack extends mzWidget {
     children = null,
     mainAlignment = mzData.flexMainAlign.start,
     crossAlignment = mzData.flexCrossAlign.start,
-    styling = [],
   }) {
     super();
     this.element = document.createElement("mzapp-stack");
     this.classes[mainAlignment] = true;
     this.classes[crossAlignment] = true;
     this.children = children;
-    this.styling = styling;
   }
 }
 //========================== Expand
 class mzCenter extends mzWidget {
-  constructor({ child = null, styling = [] }) {
+  constructor({ child = null }) {
     super();
     this.element = document.createElement("mzapp-center");
     this.children = [child];
-    this.styling = styling;
   }
 }
 //========================== Button
@@ -224,20 +213,18 @@ class mzButton extends mzWidget {
     child = null,
     disabled = false,
     onclick = null,
-    styling = [],
+    padding = mzPadding.symmetric(2.5, 5),
+    margin = mzMargin.all(1),
+    border = mzBorder.none,
+    shadow = mzShadow.set(1),
+    background = mzBackground.set("#fff"),
   }) {
     super();
     this.element = document.createElement("mzapp-button");
-    this.defaultStyling = [
-      new mzPadding().symmetric(2.5, 5),
-      new mzMargin(2.5),
-      new mzShadow(2),
-      new mzColor(mzData.colors.black, mzData.colors.White),
-    ];
     this.children = [child];
     this.classes["disabled"] = disabled;
     this.nodeAttrs = { onclick: !disabled ? onclick : null };
-    this.styling = styling;
+    this.styling = [padding, margin, border, shadow, background];
   }
 }
 //========================== Text
@@ -246,25 +233,28 @@ class mzText extends mzWidget {
     text = "",
     align = mzData.textAlign.start,
     overflow = mzData.textOverflow.wrap,
-    styling = [],
+    color = mzColor.set("#333"),
   }) {
     super();
     this.element = document.createElement("mzapp-text");
-    this.data.text = text;
     this.classes[align] = true;
     this.classes[overflow] = true;
     this.nodeAttrs = { innerText: text };
-    this.styling = styling;
+    this.styling = [color];
   }
 }
 //========================== Text
 class mzIcon extends mzWidget {
-  constructor({ icon = "", styling = [] }) {
+  constructor({
+    icon = "",
+    align = mzData.textAlign.start,
+    color = mzColor.set("#333"),
+  }) {
     super();
     this.element = document.createElement("mzapp-icon");
-    this.data.icon = icon;
+    this.classes[align] = true;
     this.nodeAttrs = { innerText: icon };
-    this.styling = styling;
+    this.styling = [color];
   }
 }
 //========================== Text
@@ -274,14 +264,12 @@ class mzImage extends mzWidget {
     src = "",
     fit = mzFit.fit.contain,
     position = mzFit.position.center,
-    styling = [],
   }) {
     super();
     this.element = document.createElement("mzapp-image");
     //
     this.classes[fit] = true;
     this.classes[position] = true;
-    this.styling = styling;
     this.children = [new mzImg({ src: src })];
   }
 }
@@ -294,23 +282,13 @@ class mzImg extends mzWidget {
     };
   }
 }
-//========================== appBar
-class mzAppBar extends mzWidget {
-  constructor({ child = null, styling = [] }) {
-    super();
-    this.element = document.createElement("mzapp-appbar");
-    this.children = [child];
-    this.styling = styling;
-  }
-}
 //========================== loader
 class mzLoader extends mzWidget {
-  constructor({ child = null, loading = false, styling = [] }) {
+  constructor({ child = null, loading = false }) {
     super();
     this.element = document.createElement("mzapp-loader");
     this.children = [child];
     this.classes["loading"] = loading;
-    this.styling = styling;
   }
 }
 //========================== Input Field
@@ -324,7 +302,6 @@ class mzInputField extends mzWidget {
     disabled = false,
     onchanged = null,
     validator = null,
-    styling = [],
   }) {
     super();
     this.element = document.createElement("mzapp-input");
@@ -349,7 +326,7 @@ class mzInputField extends mzWidget {
       error ? new mzText({ text: error }) : null,
     ];
     this.classes["disabled"] = disabled;
-    this.styling = styling;
+    //this.styling = styling;
   }
 }
 
