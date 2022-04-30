@@ -6,10 +6,6 @@ class mzFormGroupController extends mzController {
   constructor() {
     super();
   }
-
-  Widgets = [];
-
-  validate() {}
 }
 
 //========================== Form Field

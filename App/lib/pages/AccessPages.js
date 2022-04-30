@@ -14,37 +14,44 @@ export class LoginPage extends mzWidget {
   build() {
     return new mzScaffold({
       body: new mzCenter({
-        child: new mzContainer({
-          padding: mzPadding.all(10),
-          child: new mzFlex({
-            flow: this.row ? mzFlexFlow.row : mzFlexFlow.column,
-            mainAlignment: mzMainAlign.center,
-            crossAlignment: mzCrossAlign.center,
-            children: [
-              new mzText({ text: "text" }),
+        child: new mzScroll({
+          child: new mzContainer({
+            margin: mzMargin.all(5),
+            padding: mzPadding.all(10),
+            child: new mzGrid({
+              columns: 2,
+              mainAlignment: mzMainAlign.stretch,
+              crossAlignment: mzCrossAlign.stretch,
+              wrapAlignment: mzWrapAlign.center,
+              children: [
+                new mzContainer({
+                  size: mzSize.value(200, 100),
+                  child: new mzText({ text: "text" }),
+                }),
 
-              !this.row ? new mzText({ text: "column" }) : null,
+                !this.row ? new mzText({ text: "column" }) : null,
 
-              new mzButton({
-                onclick: () => {
-                  if (this.row) this.row = false;
-                  else this.row = true;
-                  this.setState();
-                },
-                child: "Some Text",
-              }),
+                new mzButton({
+                  onclick: () => {
+                    if (this.row) this.row = false;
+                    else this.row = true;
+                    this.setState();
+                  },
+                  child: "Some Text",
+                }),
 
-              new mzFormField({
-                formGroup: this.formGroup,
-                controller: this.email,
-                label: "email",
-                hint: "enter your email here",
-                onchanged: (value) => {
-                  this.setState();
-                },
-                validator: mzValidators.email(false),
-              }),
-            ],
+                new mzFormField({
+                  formGroup: this.formGroup,
+                  controller: this.email,
+                  label: "email",
+                  hint: "enter your email here",
+                  onchanged: (value) => {
+                    this.setState();
+                  },
+                  validator: mzValidators.email(false),
+                }),
+              ],
+            }),
           }),
         }),
       }),

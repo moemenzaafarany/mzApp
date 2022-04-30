@@ -106,7 +106,9 @@ class mzWidget {
     }
     // styles
     for (let key in this.styles) {
-      if (key) this.element.style[key] = this.styles[key];
+      if (this.styles[key])
+        this.element.style.setProperty(key, this.styles[key]);
+      else this.element.style.removeProperty(key);
     }
     // attributes
     for (let attr in this.attributes) {
@@ -118,6 +120,7 @@ class mzWidget {
     }
   }
 }
+
 //========================== Scaffold
 class mzScaffold extends mzWidget {
   constructor({
@@ -136,20 +139,31 @@ class mzScaffold extends mzWidget {
 
 //========================== Container
 class mzContainer extends mzWidget {
-  element = document.createElement("mzapp-container");
-  //
   constructor({
     child = null,
-    padding = mzPadding.none,
-    margin = mzMargin.none,
+    size = mzSize.none,
+    padding = mzPadding.all(1),
+    margin = mzMargin.all(1),
     border = mzBorder.none,
-    radius = mzRadius.all(2),
+    radius = mzRadius.all(1),
     shadow = mzShadow.set(1),
     background = mzBackground.set("#fff"),
   }) {
     super();
+    this.element = document.createElement("mzapp-container");
     this.children = [child];
-    this.styling = [padding, margin, border, radius, shadow, background];
+    this.styling = [size, padding, margin, border, radius, shadow, background];
+  }
+}
+
+//========================== Container
+class mzScroll extends mzWidget {
+  constructor({ child = null, overflowX = true, overflowY = true }) {
+    super();
+    this.element = document.createElement("mzapp-scroll");
+    this.children = [child];
+    this.classes["x"] = overflowX;
+    this.classes["y"] = overflowY;
   }
 }
 
@@ -171,8 +185,8 @@ class mzFlex extends mzWidget {
     this.children = children;
     this.classes["shrink"] = shrink;
     this.classes["wrap"] = wrap;
-    this.styles["row-gap"] = rowGap;
-    this.styles["columnGap-gap"] = columnGap;
+    this.styles["--rgp"] = `${mzUI.num(rowGap)}rem`;
+    this.styles["--cgp"] = `${mzUI.num(columnGap)}rem`;
     this.styling = [flow, mainAlignment, crossAlignment, wrapAlignment];
   }
 }
@@ -201,6 +215,40 @@ class mzStack extends mzWidget {
   }
 }
 
+//========================== Positioned
+class mzPositioned extends mzWidget {
+  constructor({ child = null, grow = 1, shrink = null, basis = null }) {
+    super();
+    this.element = document.createElement("mzapp-positioned");
+    this.children = [child];
+    this.styling = [new mzFlexExpand(grow, shrink, basis)];
+  }
+}
+
+//========================== Grid
+class mzGrid extends mzWidget {
+  constructor({
+    children = null,
+    columns = 2,
+    rowGap = 1,
+    columnGap = 1,
+    mainAlignment = mzMainAlign.start,
+    crossAlignment = mzCrossAlign.start,
+    wrapAlignment = mzWrapAlign.start,
+  }) {
+    super();
+    this.element = document.createElement("mzapp-grid");
+    this.children = children;
+    this.styles["--gtrs"] = `repeat(${Math.ceil(
+      children.length / columns
+    )},1fr)`;
+    this.styles["--gtcs"] = `repeat(${columns}, 1fr)`;
+    this.styles["--rgp"] = `${mzUI.num(rowGap)}rem`;
+    this.styles["--cgp"] = `${mzUI.num(columnGap)}rem`;
+    this.styling = [mainAlignment, crossAlignment, wrapAlignment];
+  }
+}
+
 //========================== Center
 class mzCenter extends mzWidget {
   constructor({ child = null }) {
@@ -218,16 +266,26 @@ class mzButton extends mzWidget {
     onclick = null,
     padding = mzPadding.symmetric(2.5, 5),
     margin = mzMargin.all(1),
-    border = mzBorder.none,
+    radius = mzRadius.all(1),
     shadow = mzShadow.set(1),
+    color = mzColor.set("#333"),
     background = mzBackground.set("#fff"),
+    border = mzBorder.none,
+    hoverColor = mzColor.set("#fff"),
+    hoverBackground = mzBackground.set("#333"),
+    hoverBorder = mzBorder.none,
   }) {
     super();
     this.element = document.createElement("mzapp-button");
     this.children = [child];
     this.classes["disabled"] = disabled;
     this.nodeAttrs = { onclick: !disabled ? onclick : null };
-    this.styling = [padding, margin, border, shadow, background];
+    this.styles["--h-cr"] = hoverColor.styles["--cr"];
+    this.styles["--h-bcr"] = hoverBackground.styles["--bcr"];
+    this.styles["--h-bwt"] = hoverBorder.styles["--bwt"];
+    this.styles["--h-bse"] = hoverBorder.styles["--bse"];
+    this.styles["--h-brr"] = hoverBorder.styles["--brr"];
+    this.styling = [padding, margin, radius, shadow, color, background, border];
   }
 }
 
@@ -314,6 +372,11 @@ class mzFormField extends mzWidget {
     hint = "",
     error = "",
     radius = mzRadius.all(2),
+    border = mzBorder.all(1, mzData.borderType.solid, "#333"),
+    color = mzColor.set("#333"),
+    background = mzBackground.set("#FFF"),
+    focusColor = mzColor.set("#00F"),
+    errorColor = mzColor.set("#F00"),
   }) {
     super();
     if (controller) {
@@ -322,41 +385,39 @@ class mzFormField extends mzWidget {
     }
     this.element = document.createElement("mzapp-input");
     this.children = [
-      new mzFieldLabel({ text: label }),
+      new mzFieldLabel({ text: label, color: color }),
       new mzFieldInput({
         controller: controller,
         onchanged: onchanged,
         hint: hint,
         radius: radius,
+        border: border,
+        color: color,
+        focusColor: focusColor,
+        errorColor: errorColor,
       }),
       new mzFieldError({
         text: error || validator(controller.value),
+        color: errorColor,
       }),
     ];
+    this.styles["--bwh"] = border.styles["--bwh"];
+    this.styles["--f-brr"] = focusColor.styles["--cr"];
+    this.styles["--e-brr"] = errorColor.styles["--cr"];
     this.classes["disabled"] = disabled;
-    this.styling = [];
+    this.styling = [color, background];
   }
 }
 
 //========================== Field Label
 class mzFieldLabel extends mzWidget {
-  constructor({ text = "" }) {
+  constructor({ text = "", color = mzColor.set("#333") }) {
     super();
     this.element = document.createElement("mzapp-label");
     this.nodeAttrs = {
       innerText: text,
     };
-  }
-}
-
-//========================== Field Error
-class mzFieldError extends mzWidget {
-  constructor({ text = "" }) {
-    super();
-    this.element = document.createElement("mzapp-error");
-    this.nodeAttrs = {
-      innerText: text,
-    };
+    this.styling = [color];
   }
 }
 
@@ -368,6 +429,10 @@ class mzFieldInput extends mzWidget {
     hint = "",
     shadow = mzShadow.inset(1),
     radius = mzRadius.all(2),
+    color = mzColor.set("#333"),
+    border = mzBorder.all(1, mzData.borderType.solid, "#333"),
+    focusColor = mzColor.set("#00f"),
+    errorColor = mzColor.set("#f00"),
   }) {
     super();
     this.element = document.createElement("input");
@@ -379,7 +444,9 @@ class mzFieldInput extends mzWidget {
     this.nodeAttrs = {
       value: controller.value,
     };
-    this.styling = [shadow, radius];
+    this.styles["--f-brr"] = focusColor.styles["--cr"];
+    this.styles["--e-brr"] = errorColor.styles["--cr"];
+    this.styling = [shadow, radius, color, border];
     if (onchanged || controller) {
       this.nodeAttrs["onchange"] = this.nodeAttrs["onkeyup"] = (evt) => {
         if (controller) controller.setValue(evt.target.value);
@@ -389,10 +456,14 @@ class mzFieldInput extends mzWidget {
   }
 }
 
-/*
-
-<fieldset>
-  <legend>Personalia:</legend>
-  <input type="text" id="fname" name="fname">
- </fieldset>
-*/
+//========================== Field Error
+class mzFieldError extends mzWidget {
+  constructor({ text = "", color = mzColor.set("#F00") }) {
+    super();
+    this.element = document.createElement("mzapp-error");
+    this.nodeAttrs = {
+      innerText: text,
+    };
+    this.styling = [color];
+  }
+}

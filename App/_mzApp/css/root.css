@@ -1,26 +1,76 @@
-:root {
-  --cr: inherit;
-  --bg: transparent;
-  --pd: 0;
-  --mr: 0;
-  --br-w: 0;
-  --br-s: solid;
-  --br-c: transparent;
-  --sh: transparent;
-  --wd: auto;
-  --ht: auto;
-}
 /*=======================*/
 * {
-  color: var(--cr);
-  background-color: var(--bg);
-  padding: var(--pd);
-  margin: var(--mr);
-  border-width: 0 var(--br-s) var(--br-c);
-  border-width: var(--br-w);
-  box-shadow: var(--sh);
-  width: var(--wd);
-  height: var(--ht);
+  --cr: inherit;
+  --bcr: transparent;
+  --brr: transparent;
+  --bse: solid;
+  --bwh: 0;
+  --bsw: none;
+  --brs: 0;
+  --pg: 0;
+  --mn: 0;
+  --wh: ;
+  --ht: ;
+
+  --gtrs: ;
+  --gtcs: ;
+
+  --rgp: ;
+  --cgp: ;
+
+  --h-cr: var(--cr);
+  --h-bcr: var(--bcr);
+  --h-brr: var(--brr);
+  --h-bse: var(--bse);
+  --h-bwh: var(--bwh);
+  --h-bsw: var(--bsw);
+  --h-brs: var(--brs);
+  --h-pg: var(--pg);
+  --h-mn: var(--mn);
+  --h-wh: var(--wh);
+  --h-ht: var(--ht);
+
+  --f-cr: var(--cr);
+  --f-bcr: var(--bcr);
+  --f-brr: var(--brr);
+  --f-bse: var(--bse);
+  --f-bwh: var(--bwh);
+  --f-bsw: var(--bsw);
+  --f-brs: var(--brs);
+  --f-pg: var(--pg);
+  --f-mn: var(--mn);
+  --f-wh: var(--wh);
+  --f-ht: var(--ht);
+  --f-cr: var(--cr);
+
+  --e-bcr: var(--bcr);
+  --e-brr: var(--brr);
+  --e-bse: var(--bse);
+  --e-bwh: var(--bwh);
+  --e-bsw: var(--bsw);
+  --e-brs: var(--brs);
+  --e-pg: var(--pg);
+  --e-mn: var(--mn);
+  --e-wh: var(--wh);
+  --e-ht: var(--ht);
+
+  color: var(--cr) !important;
+  background-color: var(--bcr) !important;
+  border-color: var(--bcr) !important;
+  border-style: var(--bse) !important;
+  border-width: var(--bwh) !important;
+  border-radius: var(--brs) !important;
+  box-shadow: var(--bsw) !important;
+  padding: var(--pg) !important;
+  margin: var(--mn) !important;
+  width: var(--wh) !important;
+  height: var(--ht) !important;
+
+  grid-template-rows: var(--gtrs) !important;
+  grid-template-columns: var(--gtcs) !important;
+
+  row-gap: var(--rgp) !important;
+  column-gap: var(--cgp) !important;
 
   clear: both;
   font-size: 1rem;
@@ -30,6 +80,7 @@
 
   transition: all 250ms ease-in-out;
 }
+
 *::before,
 *::after {
   clear: both;
@@ -44,8 +95,8 @@ html {
 body {
   position: fixed;
   display: block;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
+  width: 100% !important;
+  height: 100% !important;
+  overflow: visible;
 }
 /*=======================*/
