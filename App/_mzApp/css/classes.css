@@ -1,0 +1,141 @@
+/*======================= Flex Flow*/
+.mzFF-rw {
+  flex-direction: row;
+}
+.mzFF-cn {
+  flex-direction: column;
+}
+.mzFF-re {
+  flex-direction: row-reverse;
+}
+.mzFF-ce {
+  flex-direction: column-reverse;
+}
+
+/*======================= Main Align*/
+.mzMA-st {
+  justify-content: flex-start;
+  align-content: flex-start;
+}
+.mzMA-ed {
+  justify-content: flex-end;
+  align-content: flex-end;
+}
+.mzMA-cr {
+  justify-content: center;
+  align-content: center;
+}
+.mzMA-be {
+  justify-content: baseline;
+}
+.mzMA-sh {
+  justify-content: stretch;
+  align-content: stretch;
+}
+.mzMA-ad {
+  justify-content: space-around;
+  align-content: space-around;
+}
+.mzMA-bn {
+  justify-content: space-between;
+  align-content: space-between;
+}
+.mzMA-ey {
+  justify-content: space-evenly;
+}
+
+/*======================= Cross Align*/
+.mzCA-st {
+  align-items: flex-start;
+}
+.mzCA-ed {
+  align-items: flex-end;
+}
+.mzCA-cr {
+  align-items: center;
+}
+.mzCA-be {
+  align-items: baseline;
+}
+.mzCA-sh {
+  align-items: stretch;
+}
+
+/*======================= Wrap Align*/
+.mzWA-st {
+  align-content: flex-start;
+}
+.mzWA-ed {
+  align-content: flex-end;
+}
+.mzWA-cr {
+  align-content: center;
+}
+.mzWA-sh {
+  align-content: stretch;
+}
+.mzWA-ad {
+  align-content: space-around;
+}
+.mzWA-bn {
+  align-content: space-between;
+}
+
+/*======================= Text Align*/
+.mzTA-st {
+  text-align: start;
+}
+.mzTA-ed {
+  text-align: end;
+}
+.mzTA-cr {
+  text-align: center;
+}
+.mzTA-jy {
+  text-align: justify;
+}
+
+/*======================= Text Overflow*/
+.mzTO-wp {
+  white-space: normal;
+  text-overflow: clip;
+}
+.mzTO-cp {
+  white-space: nowrap;
+  text-overflow: clip;
+}
+.mzTO-es {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/*======================= Object Fit*/
+.mzOF-cr {
+  object-fit: cover;
+}
+.mzOF-cn {
+  object-fit: contain;
+}
+.mzOF-fl {
+  object-fit: fill;
+}
+.mzOF-sn {
+  object-fit: scale-down;
+}
+
+/*======================= Object Position*/
+.mzOP-tp {
+  object-position: top;
+}
+.mzOP-bm {
+  object-position: bottom;
+}
+.mzOP-cr {
+  object-position: center;
+}
+.mzOP-lt {
+  object-position: left;
+}
+.mzOP-rt {
+  object-position: right;
+}

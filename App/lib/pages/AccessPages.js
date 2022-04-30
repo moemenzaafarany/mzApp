@@ -1,9 +1,14 @@
 // packages
 export class LoginPage extends mzWidget {
   static route = "/login";
-  email = "";
+
+  formGroup = new mzFormGroupController();
+  email = new mzFormFieldController();
+
+  row = false;
   constructor() {
     super();
+    this.email.value = "moemen";
   }
 
   build() {
@@ -12,16 +17,32 @@ export class LoginPage extends mzWidget {
         child: new mzContainer({
           padding: mzPadding.all(10),
           child: new mzFlex({
-            direction: mzData.flexDirection.column,
+            flow: this.row ? mzFlexFlow.row : mzFlexFlow.column,
+            mainAlignment: mzMainAlign.center,
+            crossAlignment: mzCrossAlign.center,
             children: [
-              new mzInputField({
-                label: "email",
-                hint: "enter your email here",
-                value: this.email,
-                onchanged: (value) => {
-                  this.email = value;
+              new mzText({ text: "text" }),
+
+              !this.row ? new mzText({ text: "column" }) : null,
+
+              new mzButton({
+                onclick: () => {
+                  if (this.row) this.row = false;
+                  else this.row = true;
                   this.setState();
                 },
+                child: "Some Text",
+              }),
+
+              new mzFormField({
+                formGroup: this.formGroup,
+                controller: this.email,
+                label: "email",
+                hint: "enter your email here",
+                onchanged: (value) => {
+                  this.setState();
+                },
+                validator: mzValidators.email(false),
               }),
             ],
           }),

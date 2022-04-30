@@ -36,6 +36,7 @@ class mzApp {
   static runApp(child) {
     mzApp.html.root.innerHTML = "";
     mzApp.html.root.append(child.state());
+    document.mzEvent("mzsetup");
   }
   //
   static showModal({ child = null, barrierDismissible = false }) {
@@ -43,12 +44,14 @@ class mzApp {
     mzApp.html.modals.classList.add("show");
     if (barrierDismissible) mzApp.html.modals.classList.add("dismissible");
     mzApp.html.modals.append(child.state());
+    document.mzEvent("mzsetup");
   }
   //
   static hideModal() {
     mzApp.html.modals.classList.remove("show");
     mzApp.html.modals.classList.remove("dismissible");
     mzApp.html.modals.innerHTML = "";
+    document.mzEvent("mzsetup");
   }
   //
   static changeMetadata({ title, icon }) {
@@ -99,65 +102,6 @@ class mzData {
     dotted: "dotted",
     dashed: "dashed",
     double: "double",
-  };
-  static textAlign = {
-    start: "start",
-    end: "end",
-    center: "center",
-    justify: "justify",
-  };
-  static textOverflow = {
-    wrap: "wrap",
-    clip: "clip",
-    ellipses: "ellipses",
-  };
-  static flexDirection = {
-    row: "row",
-    column: "column",
-    reverseRow: "row-reverse",
-    reverseColumn: "column-reverse",
-  };
-  static flexMainAlign = {
-    start: "main-start",
-    end: "main-start",
-    center: "main-center",
-    baseline: "main-baseline",
-    stretch: "main-stretch",
-    around: "main-around",
-    between: "main-between",
-    evenly: "main-evenly",
-  };
-  static flexCrossAlign = {
-    start: "cross-start",
-    end: "cross-start",
-    center: "cross-center",
-    baseline: "cross-baseline",
-    stretch: "cross-stretch",
-  };
-  static stackMainAlign = {
-    start: "main-start",
-    end: "main-start",
-    center: "main-center",
-    baseline: "main-baseline",
-  };
-  static stackCrossAlign = {
-    start: "cross-start",
-    end: "cross-start",
-    center: "cross-center",
-    baseline: "cross-baseline",
-  };
-  static objectFit = {
-    cover: "cover",
-    contain: "contain",
-    fill: "fill",
-    scaleDown: "scale-down",
-  };
-  static objectPosition = {
-    center: "center",
-    top: "top",
-    bottom: "bottom",
-    left: "left",
-    right: "right",
   };
   static colors = {
     AliceBlue: "#F0F8FF",
@@ -310,42 +254,3 @@ class mzData {
     YellowGreen: "#9ACD32",
   };
 }
-//========================== event Listners
-(function () {
-  document.mzListen(
-    "focus",
-    (evt) => {
-      let el = evt.target;
-      console.log(el);
-      if (el.matches("mzapp-field input")) {
-        el.parentNode.classList.add("focus");
-      }
-    },
-    true
-  );
-
-  document.mzListen(
-    "blur",
-    (evt) => {
-      let el = evt.target;
-      console.log(el);
-      if (el.matches("mzapp-field input")) {
-        el.parentNode.classList.remove("focus");
-      }
-    },
-    true
-  );
-
-  document.mzListen(
-    "change",
-    (evt) => {
-      let el = evt.target;
-      console.log(el);
-      if (el.matches("mzapp-field input")) {
-        if (el.value) el.parentNode.classList.add("value");
-        else el.parentNode.classList.remove("value");
-      }
-    },
-    true
-  );
-})();

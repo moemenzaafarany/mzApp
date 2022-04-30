@@ -59,7 +59,7 @@ class mzApp
         <script src="_assets/_mzApp/js/mzApp.js"></script>
         <script src="_assets/_mzApp/js/mzUI.js"></script>
         <script src="_assets/_mzApp/js/mzWidgets.js"></script>
-        <script src="_assets/_mzApp/js/mzMisc.js"></script>
+        <script src="_assets/_mzApp/js/mzControllers.js"></script>
         <link rel="stylesheet" href="_assets/_mzApp/css/main.css" />
         <!-- myApp -->
         <script type="module" src="_assets/lib/main.js"></script>
