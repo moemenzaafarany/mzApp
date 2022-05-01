@@ -16,20 +16,31 @@ export class LoginPage extends mzWidget {
       body: new mzCenter({
         child: new mzScroll({
           child: new mzContainer({
-            margin: mzMargin.all(5),
-            padding: mzPadding.all(10),
-            child: new mzGrid({
-              columns: 2,
-              mainAlignment: mzMainAlign.stretch,
+            margin: mzMargin.all(10),
+            padding: mzPadding.all(20),
+            radius: mzRadius.all(5),
+            child: new mzFlex({
+              flow: mzFlexFlow.column,
+              mainAlignment: mzMainAlign.start,
               crossAlignment: mzCrossAlign.stretch,
-              wrapAlignment: mzWrapAlign.center,
+              wrapAlignment: mzWrapAlign.stretch,
+              rowGap: 20,
               children: [
-                new mzContainer({
-                  size: mzSize.value(200, 100),
-                  child: new mzText({ text: "text" }),
+                new mzText({ text: "Login" }),
+
+                new mzFormField({
+                  formGroup: this.formGroup,
+                  controller: this.email,
+                  label: "email",
+
+                  hint: "enter your email here",
+                  onchanged: (value) => {
+                    this.setState();
+                  },
+                  validator: mzValidators.email(false),
                 }),
 
-                !this.row ? new mzText({ text: "column" }) : null,
+                new mzDivider({}),
 
                 new mzButton({
                   onclick: () => {
@@ -37,18 +48,7 @@ export class LoginPage extends mzWidget {
                     else this.row = true;
                     this.setState();
                   },
-                  child: "Some Text",
-                }),
-
-                new mzFormField({
-                  formGroup: this.formGroup,
-                  controller: this.email,
-                  label: "email",
-                  hint: "enter your email here",
-                  onchanged: (value) => {
-                    this.setState();
-                  },
-                  validator: mzValidators.email(false),
+                  child: "Login",
                 }),
               ],
             }),

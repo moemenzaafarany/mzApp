@@ -167,6 +167,15 @@ class mzScroll extends mzWidget {
   }
 }
 
+//========================== Divider
+class mzDivider extends mzWidget {
+  constructor({ border = mzBorder.all(1, "solid", "#333") }) {
+    super();
+    this.element = document.createElement("mzapp-divider");
+    this.styling = [border];
+  }
+}
+
 //========================== Flex
 class mzFlex extends mzWidget {
   constructor({
@@ -360,7 +369,7 @@ class mzLoader extends mzWidget {
   }
 }
 
-//========================== Input Field
+//========================== Form Field
 class mzFormField extends mzWidget {
   constructor({
     formGroup = null,
@@ -371,6 +380,7 @@ class mzFormField extends mzWidget {
     label = "",
     hint = "",
     error = "",
+    animatedLabel = true,
     radius = mzRadius.all(2),
     border = mzBorder.all(1, mzData.borderType.solid, "#333"),
     color = mzColor.set("#333"),
@@ -383,7 +393,7 @@ class mzFormField extends mzWidget {
       controller.setWidget(this, validator);
       controller.onchange = this.setState;
     }
-    this.element = document.createElement("mzapp-input");
+    this.element = document.createElement("mzapp-formfield");
     this.children = [
       new mzFieldLabel({ text: label, color: color }),
       new mzFieldInput({
@@ -404,6 +414,8 @@ class mzFormField extends mzWidget {
     this.styles["--bwh"] = border.styles["--bwh"];
     this.styles["--f-brr"] = focusColor.styles["--cr"];
     this.styles["--e-brr"] = errorColor.styles["--cr"];
+    this.classes["label"] = !animatedLabel && label;
+    this.classes["labelless"] = !label;
     this.classes["disabled"] = disabled;
     this.styling = [color, background];
   }
@@ -465,5 +477,127 @@ class mzFieldError extends mzWidget {
       innerText: text,
     };
     this.styling = [color];
+  }
+}
+
+//========================== Form Select
+class mzFormSelect extends mzWidget {
+  constructor({
+    formGroup = null,
+    controller = new mzFormFieldController(),
+    onchanged = null,
+    validator = null,
+    disabled = false,
+    label = "",
+    hint = "",
+    error = "",
+    animatedLabel = true,
+    radius = mzRadius.all(2),
+    border = mzBorder.all(1, mzData.borderType.solid, "#333"),
+    color = mzColor.set("#333"),
+    background = mzBackground.set("#FFF"),
+    focusColor = mzColor.set("#00F"),
+    errorColor = mzColor.set("#F00"),
+  }) {
+    super();
+    if (controller) {
+      controller.setWidget(this, validator);
+      controller.onchange = this.setState;
+    }
+    this.element = document.createElement("mzapp-formselect");
+    this.children = [
+      new mzFieldLabel({ text: label, color: color }),
+      new mzFieldInput({
+        controller: controller,
+        onchanged: onchanged,
+        hint: hint,
+        radius: radius,
+        border: border,
+        color: color,
+        focusColor: focusColor,
+        errorColor: errorColor,
+      }),
+      new mzFieldError({
+        text: error || validator(controller.value),
+        color: errorColor,
+      }),
+    ];
+    this.styles["--bwh"] = border.styles["--bwh"];
+    this.styles["--f-brr"] = focusColor.styles["--cr"];
+    this.styles["--e-brr"] = errorColor.styles["--cr"];
+    this.classes["label"] = !animatedLabel && label;
+    this.classes["labelless"] = !label;
+    this.classes["disabled"] = disabled;
+    this.styling = [color, background];
+  }
+}
+
+//========================== Field List
+class mzFieldList extends mzWidget {
+  constructor({
+    controller = null,
+    onchanged = null,
+    hint = "",
+    shadow = mzShadow.inset(1),
+    radius = mzRadius.all(2),
+    color = mzColor.set("#333"),
+    border = mzBorder.all(1, mzData.borderType.solid, "#333"),
+    focusColor = mzColor.set("#00f"),
+    errorColor = mzColor.set("#f00"),
+  }) {
+    super();
+    this.element = document.createElement("input");
+    this.attributes = {
+      value: controller.value,
+      error: controller.error,
+      placeholder: hint,
+    };
+    this.nodeAttrs = {
+      value: controller.value,
+    };
+    this.styles["--f-brr"] = focusColor.styles["--cr"];
+    this.styles["--e-brr"] = errorColor.styles["--cr"];
+    this.styling = [shadow, radius, color, border];
+    if (onchanged || controller) {
+      this.nodeAttrs["onchange"] = this.nodeAttrs["onkeyup"] = (evt) => {
+        if (controller) controller.setValue(evt.target.value);
+        if (onchanged) onchanged(evt.target.value);
+      };
+    }
+  }
+}
+
+//========================== Field List
+class mzFieldOption extends mzWidget {
+  constructor({
+    controller = null,
+    onchanged = null,
+    hint = "",
+    shadow = mzShadow.inset(1),
+    radius = mzRadius.all(2),
+    color = mzColor.set("#333"),
+    border = mzBorder.all(1, mzData.borderType.solid, "#333"),
+    focusColor = mzColor.set("#00f"),
+    errorColor = mzColor.set("#f00"),
+  }) {
+    super();
+    this.element = document.createElement("input");
+    this.attributes = {
+      value: controller.value,
+      error: controller.error,
+      placeholder: hint,
+    };
+    this.nodeAttrs = {
+      value: controller.value,
+    };
+    this.styles["--f-brr"] = focusColor.styles["--cr"];
+    this.styles["--e-brr"] = errorColor.styles["--cr"];
+    this.styling = [shadow, radius, color, border];
+    if (onchanged || controller) {
+      this.nodeAttrs["onchange"] = this.nodeAttrs["onkeyup"] = (evt) => {
+        if (controller) controller.setValue(evt.target.value);
+        if (onchanged) onchanged(evt.target.value);
+      };
+    }
   }
 }

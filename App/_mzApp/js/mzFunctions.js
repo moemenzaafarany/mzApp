@@ -99,7 +99,7 @@ HTMLElement.prototype.mzListen = function (
 //========================== Event Listners
 (function () {
   function mzFormField() {
-    document.querySelectorAll("mzapp-input input").forEach((el) => {
+    document.querySelectorAll("mzapp-formfield input").forEach((el) => {
       //focus
       if (document.activeElement == el) el.parentNode.classList.add("focus");
       else el.parentNode.classList.remove("focus");

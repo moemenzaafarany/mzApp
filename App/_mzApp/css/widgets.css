@@ -66,6 +66,17 @@ mzapp-center {
   align-items: center;
 }
 /*=======================*/
+mzapp-divider {
+  --wh: auto;
+  --ht: auto;
+  flex: 1 0 auto;
+  justify-self: stretch;
+  align-self: stretch;
+  border-top: none !important;
+  border-left: none !important;
+}
+
+/*=======================*/
 mzapp-flex,
 mzapp-stack {
   --wh: 100%;
@@ -93,7 +104,6 @@ mzapp-stack {
 mzapp-stack > * {
   position: absolute;
 }
-
 /*=======================*/
 mzapp-grid {
   --wh: 100%;
@@ -156,7 +166,7 @@ mzapp-image img {
 }
 
 /*=======================*/
-mzapp-input {
+mzapp-formfield {
   --bwh: 0.15rem;
   --pg: 0.3rem 0.4rem;
 
@@ -169,11 +179,15 @@ mzapp-input {
   align-items: stretch;
   margin-top: 0 !important;
 }
-mzapp-input.focus,
-mzapp-input.value {
+mzapp-formfield.label,
+mzapp-formfield.focus,
+mzapp-formfield.value {
   margin-top: 0.5rem !important;
 }
-mzapp-input * {
+mzapp-formfield.labelless {
+  margin-top: 0 !important;
+}
+mzapp-formfield * {
   --cr: inherit;
   --bcr: inherit;
   --bwh: inherit;
@@ -181,7 +195,7 @@ mzapp-input * {
 }
 
 /*=======================*/
-mzapp-input mzapp-label {
+mzapp-formfield mzapp-label {
   --mn: 0 0.5rem;
   --wh: max-content;
   --brr: transparent;
@@ -194,8 +208,9 @@ mzapp-input mzapp-label {
   background-color: transparent !important;
   background-image: transparent;
 }
-mzapp-input.focus mzapp-label,
-mzapp-input.value mzapp-label {
+mzapp-formfield.label mzapp-label,
+mzapp-formfield.focus mzapp-label,
+mzapp-formfield.value mzapp-label {
   --pg: 0 0.4rem;
   transform: translate(0, -50%);
   background-color: transparent !important;
@@ -210,32 +225,42 @@ mzapp-input.value mzapp-label {
   );
 }
 
+mzapp-formfield.labelless mzapp-label {
+  display: none;
+}
+
 /*=======================*/
-mzapp-input input {
+mzapp-formfield input {
   --wh: 100%;
 
   -webkit-appearance: none;
   min-width: unset;
 }
-mzapp-input.focus input {
+mzapp-formfield.focus input {
   border-color: var(--f-brr) !important;
 }
-mzapp-input.focus input,
-mzapp-input.value input {
+mzapp-formfield.label input,
+mzapp-formfield.focus input,
+mzapp-formfield.value input {
   padding-top: 0.5rem !important;
 }
-mzapp-input input::placeholder {
+mzapp-formfield.labelless input {
+  padding: var(--pg) !important;
+}
+mzapp-formfield input::placeholder {
   opacity: 0;
 }
-mzapp-input.focus input:focus::placeholder {
+mzapp-formfield.label input::placeholder,
+mzapp-formfield.labelless input::placeholder,
+mzapp-formfield.focus input:focus::placeholder {
   opacity: 1;
 }
-mzapp-input.error input {
+mzapp-formfield.error input {
   border-color: var(--e-brr) !important;
 }
 
 /*=======================*/
-mzapp-input mzapp-error {
+mzapp-formfield mzapp-error {
   --wh: max-content;
   --pg: 0;
 
