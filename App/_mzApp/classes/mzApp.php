@@ -45,7 +45,7 @@ class mzApp
     {
         echo '
 <!DOCTYPE html>
-<html lang="en" mzapp-route="' . mzApp::$URL_ROUTE . '">
+<html lang="en" mzroute="' . mzApp::$URL_ROUTE . '">
     <head>
         <base href="' . mzApp::$URL_BASE . '">
         <!-- meta -->
@@ -53,7 +53,7 @@ class mzApp
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title></title>
-        <link rel="icon" href="" id="mzapp-tab-icon">
+        <link rel="icon" href="" id="mztab-icon">
         <!-- _mzApp -->
         <script src="_assets/_mzApp/js/mzFunctions.js"></script>
         <script src="_assets/_mzApp/js/mzApp.js"></script>
@@ -66,8 +66,8 @@ class mzApp
     </head>
 
     <body>
-        <mzapp-root></mzapp-root>
-        <mzapp-modals></mzapp-modals>
+        <mzroot></mzroot>
+        <mzmodals></mzmodals>
     </body>
 </html>';
         exit();

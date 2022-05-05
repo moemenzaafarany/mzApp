@@ -2,13 +2,30 @@
 export class LoginPage extends mzWidget {
   static route = "/login";
 
-  formGroup = new mzFormGroupController();
-  email = new mzFormFieldController();
+  //formGroup = new mzFormController();
+  email = new mzFieldController({
+    onchanged: (value) => {
+      console.log(value);
+    },
+    validator: mzValidators.email(false),
+  });
+  org = new mzFieldController({
+    validator: mzValidators.notEmpty(),
+    onchanged: (value) => {
+      console.log(value);
+    },
+  });
+
+  orgs = [];
 
   row = false;
   constructor() {
     super();
     this.email.value = "moemen";
+
+    for (let i = 1; i <= 100; i++) {
+      this.orgs.push({ id: i, name: `org ${i}` });
+    }
   }
 
   build() {
@@ -28,17 +45,33 @@ export class LoginPage extends mzWidget {
               children: [
                 new mzText({ text: "Login" }),
 
+                new mzFieldInput({
+                  controller: this.email,
+                  label: "hi",
+                  hint: "ass",
+                }),
+                /*
                 new mzFormField({
                   formGroup: this.formGroup,
                   controller: this.email,
                   label: "email",
-
                   hint: "enter your email here",
-                  onchanged: (value) => {
-                    this.setState();
-                  },
-                  validator: mzValidators.email(false),
                 }),
+
+                new mzFormSelect({
+                  formGroup: this.formGroup,
+                  controller: this.org,
+                  label: "org",
+                  hint: "Choose your org",
+                  options: this.orgs.mzGenerate(
+                    (i, val) =>
+                      new mzSelectOption({
+                        controller: this.org,
+                        value: val["name"],
+                        child: new mzText({ text: val["name"] }),
+                      })
+                  ),
+                }),*/
 
                 new mzDivider({}),
 

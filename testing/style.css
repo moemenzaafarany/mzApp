@@ -1,0 +1,141 @@
+* {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  color: inherit;
+  background-color: transparent;
+  font-size: 1rem;
+  overflow: visible;
+
+  transition: all 500ms ease-in-out;
+}
+*:focus {
+  outline: none;
+}
+body {
+  padding: 1rem;
+}
+input {
+  display: inline-block;
+  min-width: auto;
+}
+
+/*=============*/
+mzfield {
+  --background-color: white;
+  --background: var(--background-color);
+  --color: #333;
+  --hover-color: black;
+  --focus-color: blue;
+  --error-color: red;
+  --font-size: 1rem;
+  --padding: 0.2rem 0.4rem;
+  --min-padding: 0 0.4rem;
+  --border-width: 0.125rem;
+  --border-style: solid;
+  --border-radius: 0.15rem;
+
+  position: relative;
+  display: flex;
+  flex-flow: column;
+  justify-content: stretch;
+  align-items: stretch;
+  color: var(--color);
+}
+mzfield.focus,
+mzfield.label,
+mzfield.value {
+  margin-top: calc(var(--font-size) / 2);
+}
+mzfield.labelless {
+  margin-top: unset;
+}
+
+/*=============*/
+mzfield mzlabel {
+  position: absolute;
+  pointer-events: none;
+  padding: var(--padding);
+  margin: 0;
+  border-width: var(--border-width);
+  border-style: var(--border-style);
+  border-color: transparent;
+  top: 0;
+}
+mzfield.focus mzlabel,
+mzfield.label mzlabel,
+mzfield.value mzlabel {
+  top: -25%;
+  background-color: var(--background);
+  border-width: 0;
+  padding: var(--min-padding);
+  margin: var(--padding);
+}
+mzfield.labelless mzlabel {
+  display: none;
+}
+
+/*=============*/
+mzfield mzhint {
+  position: absolute;
+  pointer-events: none;
+  padding: var(--padding);
+  margin: 0;
+  border-width: var(--border-width);
+  border-style: var(--border-style);
+  border-color: transparent;
+  top: 0;
+  opacity: 0;
+}
+mzfield.focus mzhint,
+mzfield.label mzhint,
+mzfield.labelless mzhint {
+  padding-top: calc(var(--font-size) / 2);
+  opacity: 0.5;
+}
+mzfield.labelless mzhint {
+  padding: var(--padding);
+}
+mzfield.value mzhint {
+  opacity: 0;
+}
+
+/*=============*/
+mzfield mzvalue {
+  display: flex;
+  flex-flow: column;
+  justify-content: stretch;
+  align-items: stretch;
+
+  padding: var(--padding);
+  border-width: var(--border-width);
+  border-style: var(--border-style);
+  border-color: var(--color);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+}
+mzfield.focus mzvalue,
+mzfield.label mzvalue,
+mzfield.value mzvalue {
+  padding-top: calc(var(--font-size) / 2);
+}
+mzfield.labelless mzvalue {
+  padding: var(--padding);
+}
+mzfield.focus mzvalue {
+  border-color: var(--focus-color);
+}
+mzfield.error mzvalue {
+  border-color: var(--error-color);
+}
+
+/*=============*/
+mzfield mzerror {
+  text-indent: 0.2rem;
+  color: var(--error-color);
+  overflow: hidden;
+  opacity: 0;
+}
+mzfield.error mzerror {
+  opacity: 1;
+}

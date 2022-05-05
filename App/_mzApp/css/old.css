@@ -1,0 +1,190 @@
+
+/*=======================*/
+mzformfield mzformlabel,
+mzformselect mzformlabel {
+  --mn: 0 0.5rem;
+  --wh: max-content;
+  --brr: transparent;
+
+  position: absolute;
+  display: inline-block;
+  pointer-events: none;
+  transform: translate(0, 0);
+
+  border-width: 0 !important;
+  background-color: transparent !important;
+  background-image: transparent !important;
+}
+mzformfield.label mzformlabel,
+mzformfield.focus mzformlabel,
+mzformfield.value mzformlabel,
+mzformselect.label mzformlabel,
+mzformselect.focus mzformlabel,
+mzformselect.value mzformlabel {
+  --pg: 0 0.4rem;
+  transform: translate(0, -50%);
+  background-image: linear-gradient(
+    to bottom,
+    transparent,
+    transparent calc(50% - var(--bwh) / 2),
+    var(--bcr) calc(50% - var(--bwh) / 2),
+    var(--bcr) calc(50% + var(--bwh) * 2),
+    transparent calc(50% + var(--bwh) * 2),
+    transparent
+  );
+}
+
+mzformfield.labelless mzformlabel,
+mzformselect.labelless mzformlabel {
+  display: none;
+}
+
+/*=======================*/
+mzformfield mzformerror,
+mzformselect mzformerror {
+  --wh: max-content;
+  --pg: 0;
+  --cr: var(--e-cr);
+  --bwh: 0;
+  --bcr: transparent;
+
+  display: inline-block;
+  pointer-events: none;
+  font-size: 0.75rem;
+
+  background-image: transparent !important;
+}
+
+/*=======================*/
+mzformfield,
+mzformselect {
+  --bwh: 0.15rem;
+  --pg: 0.3rem 0.4rem;
+
+  padding: 0 !important;
+  border-width: 0 !important;
+  position: relative;
+  display: flex;
+  flex-flow: column;
+  justify-content: stretch;
+  align-items: stretch;
+  margin-top: 0 !important;
+}
+mzformfield.label,
+mzformfield.focus,
+mzformfield.value,
+mzformselect.label,
+mzformselect.focus,
+mzformselect.value {
+  margin-top: 0.5rem !important;
+}
+mzformfield.labelless,
+mzformselect.labelless {
+  margin-top: 0 !important;
+}
+mzformfield > *,
+mzformselect > * {
+  --cr: inherit;
+  --bcr: inherit;
+
+  --bwh: inherit;
+  --bse: inherit;
+  --brr: inherit;
+  --brs: inherit;
+
+  --pg: inherit;
+  --f-brr: inherit;
+  --e-brr: inherit;
+  --e-cr: inherit;
+}
+
+/*=======================*/
+mzformfield input,
+mzformselect mzselectvalue {
+  --wh: 100%;
+
+  -webkit-appearance: none;
+  min-width: unset;
+
+  writing-mode: horizontal-tb !important;
+  text-rendering: auto;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-transform: none;
+  text-indent: 0px;
+  text-shadow: none;
+  text-align: start;
+  -webkit-rtl-ordering: logical;
+  cursor: text;
+}
+mzformselect mzselectvalue {
+  cursor: pointer;
+}
+
+mzformselect mzselectvalue * {
+  pointer-events: none;
+}
+
+mzformfield.focus input,
+mzformselect.focus mzselectvalue {
+  border-color: var(--f-brr) !important;
+}
+mzformfield.label input,
+mzformfield.focus input,
+mzformfield.value input,
+mzformselect.label mzselectvalue,
+mzformselect.focus mzselectvalue,
+mzformselect.value mzselectvalue {
+  padding-top: 0.5rem !important;
+}
+mzformfield.labelless input,
+mzformselect.labelless mzselectvalue {
+  padding: var(--pg) !important;
+}
+mzformfield input::placeholder,
+mzformselect mzselectvalue::before {
+  --cr: inherit;
+  content: attr(placeholder);
+  width: 100%;
+  opacity: 0;
+}
+mzformfield.label input::placeholder,
+mzformfield.labelless input::placeholder,
+mzformfield.focus input:focus::placeholder,
+mzformselect.label mzselectvalue::before,
+mzformselect.labelless mzselectvalue::before,
+mzformselect.focus mzselectvalue::before {
+  opacity: 1;
+}
+mzformselect.value mzselectvalue::before {
+  display: none;
+}
+
+mzformfield.error input,
+mzformselect.error mzselectvalue {
+  border-color: var(--e-brr) !important;
+}
+
+/*=======================*/
+mzformselect mzselectlist {
+  --wh: 100%;
+  --rgp: 0.1rem;
+  position: absolute;
+  top: 100%;
+  display: none;
+  flex-flow: column;
+  justify-content: stretch;
+  align-items: stretch;
+  align-content: stretch;
+}
+mzformselect.options mzselectlist {
+  display: flex;
+}
+
+/*=======================*/
+mzformselect mzselectlist mzselectoption {
+  cursor: pointer;
+}
+
+mzformselect mzselectlist mzselectoption:hover {
+}

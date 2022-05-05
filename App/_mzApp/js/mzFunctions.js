@@ -15,23 +15,7 @@ window.mzEvent = function (
     })
   );
 };
-Document.prototype.mzEvent = function (
-  name,
-  detail,
-  bubbles = true,
-  cancelable = false,
-  composed = false
-) {
-  return this.dispatchEvent(
-    new CustomEvent(name, {
-      detail: detail,
-      bubbles: bubbles,
-      cancelable: cancelable,
-      composed: composed,
-    })
-  );
-};
-HTMLElement.prototype.mzEvent = function (
+Document.prototype.mzEvent = HTMLElement.prototype.mzEvent = function (
   name,
   detail,
   bubbles = true,
@@ -64,23 +48,7 @@ window.mzListen = function (
   });
   return controller;
 };
-Document.prototype.mzListen = function (
-  event,
-  callback = function () {},
-  capture = false,
-  once = false,
-  passive = false
-) {
-  let controller = new AbortController();
-  this.addEventListener(event, callback, {
-    capture: capture,
-    once: once,
-    passive: passive,
-    signal: controller.signal,
-  });
-  return controller;
-};
-HTMLElement.prototype.mzListen = function (
+Document.prototype.mzListen = HTMLElement.prototype.mzListen = function (
   event,
   callback,
   capture = false,
@@ -96,28 +64,71 @@ HTMLElement.prototype.mzListen = function (
   });
   return controller;
 };
+//========================== mzFind
+Document.prototype.mzFindParent = HTMLElement.prototype.mzFindParent =
+  function (parent) {
+    while (this.parentNode) {
+      if (this.parentNode.matches(parent)) return this.parentNode;
+      else return this.parentNode.mzFindParent(parent);
+    }
+    return null;
+  };
+//========================== mzGenerate
+Array.prototype.mzGenerate = function (callback = (i, val) => null) {
+  let list = [];
+  for (let i = 0; i < this.length; i++) {
+    list.push(callback(i, this[i]));
+  }
+  return list;
+};
 //========================== Event Listners
+/*
 (function () {
-  function mzFormField() {
-    document.querySelectorAll("mzapp-formfield input").forEach((el) => {
+  function mzFormField(evt, target) {
+    document.querySelectorAll("mzformfield input").forEach((el) => {
       //focus
       if (document.activeElement == el) el.parentNode.classList.add("focus");
       else el.parentNode.classList.remove("focus");
       //value
       if (el.value) el.parentNode.classList.add("value");
       else el.parentNode.classList.remove("value");
-      //value
-      if (el.getAttribute("error") == "true")
-        el.parentNode.classList.add("error");
+      //error
+      if (el.getAttribute("error")) el.parentNode.classList.add("error");
       else el.parentNode.classList.remove("error");
     });
+  }
+
+  function mzFormSelect(evt, target) {
+    document
+      .querySelectorAll("mzformselect mzselectvalue")
+      .forEach((el) => {
+        //focus
+        if (document.activeElement == el) el.parentNode.classList.add("focus");
+        else el.parentNode.classList.remove("focus");
+        //value
+        if (el.getAttribute("value")) el.parentNode.classList.add("value");
+        else el.parentNode.classList.remove("value");
+        //error
+        if (el.getAttribute("error")) el.parentNode.classList.add("error");
+        else el.parentNode.classList.remove("error");
+        //options
+        if (
+          target &&
+          (el == target ||
+            target.matches("mzformselect mzselectvalue *"))
+        ) {
+          el.parentNode.classList.add("options");
+        } else {
+          el.parentNode.classList.remove("options");
+        }
+      });
   }
 
   document.mzListen(
     "focus",
     (evt) => {
-      let el = evt.target;
-      mzFormField();
+      mzFormField(evt, evt.target);
+      mzFormSelect(evt, evt.target);
     },
     true
   );
@@ -125,8 +136,8 @@ HTMLElement.prototype.mzListen = function (
   document.mzListen(
     "blur",
     (evt) => {
-      let el = evt.target;
-      mzFormField();
+      mzFormField(evt, evt.target);
+      mzFormSelect(evt, evt.target);
     },
     true
   );
@@ -134,8 +145,17 @@ HTMLElement.prototype.mzListen = function (
   document.mzListen(
     "change",
     (evt) => {
-      let el = evt.target;
-      mzFormField();
+      mzFormField(evt, evt.target);
+      mzFormSelect(evt, evt.target);
+    },
+    true
+  );
+
+  document.mzListen(
+    "click",
+    (evt) => {
+      mzFormField(evt, evt.target);
+      mzFormSelect(evt, evt.target);
     },
     true
   );
@@ -143,12 +163,12 @@ HTMLElement.prototype.mzListen = function (
   document.mzListen(
     "mzsetup",
     (evt) => {
-      let el = evt.target;
       mzFormField();
+      mzFormSelect();
     },
     true
   );
-})();
+})();*/
 //========================== mzXhr
 class mzXhr {
   //
@@ -326,17 +346,24 @@ class mzXhr {
 }
 //========================== mzValidators
 class mzValidators {
+  static notEmpty() {
+    return (value) => {
+      if (!value) return "value cannot be empty";
+      return null;
+    };
+  }
+
   static email(required = false, min = null, max = null) {
     return (value) => {
       if (!required && !value) return null;
-      if (required && !value) return "email cannot be empty";
+      if (required && !value) return "value cannot be empty";
 
       if (
         !value.match(
           /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         )
       )
-        return "Invalid email address";
+        return "Invalid value";
 
       return null;
     };

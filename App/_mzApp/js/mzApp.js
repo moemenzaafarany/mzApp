@@ -19,9 +19,9 @@ class mzApp {
       mzApp.html.html = document.documentElement;
       mzApp.html.body = document.body;
       mzApp.html.tab.title = document.title;
-      mzApp.html.tab.icon = document.getElementById("mzapp-tab-icon");
-      mzApp.html.root = document.querySelector("body mzapp-root");
-      mzApp.html.modals = document.querySelector("body mzapp-modals");
+      mzApp.html.tab.icon = document.getElementById("mztab-icon");
+      mzApp.html.root = document.querySelector("body mzroot");
+      mzApp.html.modals = document.querySelector("body mzmodals");
       mzApp.html.modals.onclick = () => {
         if (mzApp.html.modals.classList.contains("dismissible"))
           mzApp.hideModal();
@@ -63,6 +63,13 @@ class mzApp {
   static getDIR() {
     return this.html.html.getAttribute("dir") || "ltr";
   }
+  //
+  static widgetIds = 0;
+  static widgetTree = {};
+  static getId() {
+    mzApp.widgetIds++;
+    return mzApp.widgetIds;
+  }
 }
 //========================== mzRoutes
 class mzRoutes {
@@ -76,7 +83,7 @@ class mzRoutes {
     this.home = home;
     this.routes = routes;
     this.fallback = fallback;
-    this.currentRoute = document.documentElement.getAttribute("mzapp-route");
+    this.currentRoute = document.documentElement.getAttribute("mzroute");
   }
   //
   getWidget() {
