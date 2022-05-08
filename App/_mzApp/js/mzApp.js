@@ -102,6 +102,7 @@ class mzRoutes {
     mzApp.runApp(this.getWidget());
   }
 }
+/*
 //========================== mzData
 class mzData {
   static borderType = {
@@ -261,3 +262,4 @@ class mzData {
     YellowGreen: "#9ACD32",
   };
 }
+*/

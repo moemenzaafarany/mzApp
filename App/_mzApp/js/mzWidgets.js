@@ -173,7 +173,7 @@ class mzScaffold extends mzWidget {
     bottomBar = null,
     drawer = null,
     body = null,
-    background = mzBackground.set("#eee"),
+    background = mzBackgroundUI.set("#eee"),
   }) {
     super();
     this.element = document.createElement("mzscaffold");
@@ -186,18 +186,19 @@ class mzScaffold extends mzWidget {
 class mzContainer extends mzWidget {
   constructor({
     child = null,
-    size = mzSize.none,
-    padding = mzPadding.all(1),
-    margin = mzMargin.all(1),
-    border = mzBorder.none,
-    radius = mzRadius.all(1),
-    shadow = mzShadow.set(1),
-    background = mzBackground.set("#fff"),
+    width = mzWidthUI.none,
+    height = mzHeightUI.none,
+    padding = mzPaddingUI.all(1),
+    margin = mzMarginUI.all(1),
+    border = mzBorderUI.none,
+    radius = mzRadiusUI.all(1),
+    shadow = mzShadowUI.elevate(1),
+    background = mzBackgroundUI.set("#fff"),
   }) {
     super();
     this.element = document.createElement("mzcontainer");
     this.children = [child];
-    this.styling = [size, padding, margin, border, radius, shadow, background];
+    //this.styling = [size, padding, margin, border, radius, shadow, background];
   }
 }
 
@@ -214,7 +215,7 @@ class mzScroll extends mzWidget {
 
 //========================== Divider
 class mzDivider extends mzWidget {
-  constructor({ border = mzBorder.all(1, "solid", "#333") }) {
+  constructor({ border = mzBorderUI.all(1, "solid", "#333") }) {
     super();
     this.element = document.createElement("mzdivider");
     this.styling = [border];
@@ -229,10 +230,11 @@ class mzFlex extends mzWidget {
     wrap = false,
     rowGap = 0,
     columnGap = 0,
-    flow = mzFlexFlow.row,
-    mainAlignment = mzMainAlign.start,
-    crossAlignment = mzCrossAlign.start,
-    wrapAlignment = mzWrapAlign.start,
+    flow = mzFlexFlowUI.row,
+    mainContentAlign = mzMainAlignUI.start,
+    crossContentAlign = mzCrossAlignUI.start,
+    mainItemAlign = mzMainAlignUI.stretch,
+    crossItemAlign = mzMainAlignUI.stretch,
   }) {
     super();
     this.element = document.createElement("mzflex");
@@ -241,7 +243,13 @@ class mzFlex extends mzWidget {
     this.classes["wrap"] = wrap;
     this.styles["--rgp"] = `${mzUI.num(rowGap)}rem`;
     this.styles["--cgp"] = `${mzUI.num(columnGap)}rem`;
-    this.styling = [flow, mainAlignment, crossAlignment, wrapAlignment];
+    this.styling = [
+      flow,
+      mainContentAlign,
+      crossContentAlign,
+      mainItemAlign,
+      crossItemAlign,
+    ];
   }
 }
 
@@ -318,16 +326,16 @@ class mzButton extends mzWidget {
     child = null,
     disabled = false,
     onclick = null,
-    padding = mzPadding.symmetric(2.5, 5),
-    margin = mzMargin.all(1),
-    radius = mzRadius.all(1),
-    shadow = mzShadow.set(1),
-    color = mzColor.set("#333"),
-    background = mzBackground.set("#fff"),
-    border = mzBorder.none,
-    hoverColor = mzColor.set("#fff"),
-    hoverBackground = mzBackground.set("#333"),
-    hoverBorder = mzBorder.none,
+    padding = mzPaddingUI.symmetric(2.5, 5),
+    margin = mzMarginUI.all(1),
+    radius = mzRadiusUI.all(1),
+    shadow = mzShadowUI.elevate(1),
+    color = mzColorUI.set("#333"),
+    background = mzBackgroundUI.set("#fff"),
+    border = mzBorderUI.none,
+    hoverColor = mzColorUI.set("#fff"),
+    hoverBackground = mzBackgroundUI.set("#333"),
+    hoverBorder = mzBorderUI.none,
   }) {
     super();
     this.element = document.createElement("mzbutton");
@@ -350,9 +358,9 @@ class mzText extends mzWidget {
   constructor({
     text = "",
     fontSize = 16,
-    align = mzTextAlign.start,
-    overflow = mzTextOverflow.wrap,
-    color = mzColor.set("#333"),
+    align = null, //mzTextAlign.start,
+    overflow = null, //mzTextOverflow.wrap,
+    color = mzColorUI.set("#333"),
   }) {
     super();
     this.element = document.createElement("mztext");
@@ -366,7 +374,7 @@ class mzIcon extends mzWidget {
   constructor({
     icon = "",
     align = mzTextAlign.start,
-    color = mzColor.set("#333"),
+    color = mzColorUI.set("#333"),
   }) {
     super();
     this.element = document.createElement("mzicon");
@@ -475,12 +483,12 @@ class mzFormField extends mzWidget {
     label = "",
     hint = "",
     animatedLabel = true,
-    radius = mzRadius.all(2),
-    border = mzBorder.all(1, mzData.borderType.solid, "#333"),
-    color = mzColor.set("#333"),
-    background = mzBackground.set("#FFF"),
-    focusColor = mzColor.set("#00F"),
-    errorColor = mzColor.set("#F00"),
+    radius = mzRadiusUI.all(2),
+    border = mzBorderUI.all(1, mzData.borderType.solid, "#333"),
+    color = mzColorUI.set("#333"),
+    background = mzBackgroundUI.set("#FFF"),
+    focusColor = mzColorUI.set("#00F"),
+    errorColor = mzColorUI.set("#F00"),
   }) {
     super();
     this.element = document.createElement("mzformfield");
@@ -519,7 +527,7 @@ class mzFormField extends mzWidget {
 
 //========================== Field Input
 class mzFieldInput extends mzWidget {
-  constructor({ controller = null, hint = "", shadow = mzShadow.inset(1) }) {
+  constructor({ controller = null, hint = "", shadow = mzShadowUI.inset(1) }) {
     super();
     this.element = document.createElement("input");
     this.attributes = {
@@ -551,12 +559,12 @@ class mzFormSelect extends mzWidget {
     label = "",
     hint = "",
     options = null,
-    radius = mzRadius.all(2),
-    border = mzBorder.all(1, mzData.borderType.solid, "#333"),
-    color = mzColor.set("#333"),
-    background = mzBackground.set("#FFF"),
-    focusColor = mzColor.set("#00F"),
-    errorColor = mzColor.set("#F00"),
+    radius = mzRadiusUI.all(2),
+    border = mzBorderUI.all(1, mzData.borderType.solid, "#333"),
+    color = mzColorUI.set("#333"),
+    background = mzBackgroundUI.set("#FFF"),
+    focusColor = mzColorUI.set("#00F"),
+    errorColor = mzColorUI.set("#F00"),
   }) {
     super();
     this.element = document.createElement("mzformselect");
@@ -597,7 +605,7 @@ class mzFormSelect extends mzWidget {
 
 //========================== Field List
 class mzSelectValue extends mzWidget {
-  constructor({ controller = null, hint = null, shadow = mzShadow.inset(1) }) {
+  constructor({ controller = null, hint = null, shadow = mzShadowUI.inset(1) }) {
     super();
     this.element = document.createElement("mzselectvalue");
     this.attributes = {
@@ -712,11 +720,11 @@ class mzFieldInput extends mzWidget {
     label = "",
     hint = "",
     //
-    color = mzBackground.set("#333"),
-    background = mzBackground.set("#fff"),
-    fontSize = mzFontSize.set(10),
-    padding = mzPadding.symmetric(5, 10),
-    margin = mzMargin.none,
+    color = mzBackgroundUI.set("#333"),
+    background = mzBackgroundUI.set("#fff"),
+    fontSize = mzFontSizeUI.set(10),
+    padding = mzPaddingUI.symmetric(5, 10),
+    margin = mzMarginUI.none,
     hoverColor = null,
     focusColor = null,
     errorColor = null,
@@ -735,12 +743,12 @@ class mzFieldInput extends mzWidget {
     //
     this.children = this.build();
     //
-    this.styles["--cr"] = color.data.cr;
-    this.styles["--bdcr"] = background.data.bdcr;
-    this.styles["--bdie"] = background.data.bdie;
-    this.styles["--ftse"] = fontSize.data.ftse;
-    this.styles["--pg"] = padding.data.pg;
-    this.styles["--mn"] = margin.data.mn;
+    // this.styles["--cr"] = color.data.cr;
+    // this.styles["--bdcr"] = background.data.bdcr;
+    // this.styles["--bdie"] = background.data.bdie;
+    // this.styles["--ftse"] = fontSize.data.ftse;
+    // this.styles["--pg"] = padding.data.pg;
+    // this.styles["--mn"] = margin.data.mn;
 
     /*    
   --bdcr: white;

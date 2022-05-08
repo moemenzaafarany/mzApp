@@ -33,14 +33,14 @@ export class LoginPage extends mzWidget {
       body: new mzCenter({
         child: new mzScroll({
           child: new mzContainer({
-            margin: mzMargin.all(10),
-            padding: mzPadding.all(20),
-            radius: mzRadius.all(5),
+            margin: mzMarginUI.all(10),
+            padding: mzPaddingUI.all(20),
+            radius: mzRadiusUI.all(5),
             child: new mzFlex({
-              flow: mzFlexFlow.column,
-              mainAlignment: mzMainAlign.start,
-              crossAlignment: mzCrossAlign.stretch,
-              wrapAlignment: mzWrapAlign.stretch,
+             // flow: mzFlexFlow.column,
+            //  mainAlignment: mzMainAlign.start,
+             // crossAlignment: mzCrossAlign.stretch,
+             // wrapAlignment: mzWrapAlign.stretch,
               rowGap: 20,
               children: [
                 new mzText({ text: "Login" }),

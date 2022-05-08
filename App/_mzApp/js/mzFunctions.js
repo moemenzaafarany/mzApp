@@ -81,6 +81,23 @@ Array.prototype.mzGenerate = function (callback = (i, val) => null) {
   }
   return list;
 };
+//========================== mzMath
+Number.prototype.mzClamp = function (min = 0, max = 0) {
+  return Math.min(max, Math.max(this.valueOf(), min));
+};
+
+Number.prototype.mzPercentage = function (min = 0, max = 0, percent = 100) {
+  return ((this.valueOf() - min) / max) * percent;
+};
+
+Number.prototype.mzFromPercentage = function (min = 0, max = 0, percent = 100) {
+  return (max - min) * (this.valueOf() / percent);
+};
+
+Number.prototype.mzRound = function (decimals = 0) {
+  return +this.valueOf().toFixed(decimals);
+};
+
 //========================== Event Listners
 /*
 (function () {

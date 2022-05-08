@@ -42,80 +42,114 @@ input {
   min-width: unset;
 }
 /*=======================*/
-:root {
+* {
   /*position*/
-  --pn: static; /*position, position*/
-  --pn_t: 0; /*position top, top*/
-  --pn_r: 0; /*position right, right*/
-  --pn_b: 0; /*position bottom, bottom*/
-  --pn_l: 0; /*position left, left*/
+  --pn: static; /*position*/
+  position: var(--pn);
+  --pn_t: unset; /*position top*/
+  top: var(--pn_t);
+  --pn_r: unset; /*position right*/
+  right: var(--pn_r);
+  --pn_b: unset; /*position bottom*/
+  bottom: var(--pn_b);
+  --pn_l: unset; /*position left*/
+  left: var(--pn_l);
 
   /*display*/
-  --dy: block; /*display, display*/
+  --dy: block; /*display*/
+  display: var(--dy);
 
   /*overflow*/
-  --ow_h: visible; /*overflow horizontal, overflow-x*/
-  --ow_v: visible; /*overflow vertical, overflow-y*/
-  --ow_w: normal; /*overflow wrap, overflow-wrap*/
+  --ow_h: visible; /*overflow horizontal*/
+  overflow-x: var(--ow_h);
+  --ow_v: visible; /*overflow vertical*/
+  overflow-y: var(--ow_v);
+  --ow_w: normal; /*overflow wrap*/
+  overflow-wrap: var(--ow_w);
 
   /*width*/
-  --wh: unset; /*width, width*/
-  --wh_n: unset; /*min width, min-width*/
-  --wh_x: unset; /*max width, max-width*/
+  --wh: unset; /*width*/
+  width: var(--wh);
+  --wh_n: unset; /*min width*/
+  min-width: var(--wh_n);
+  --wh_x: unset; /*max width*/
+  max-width: var(--wh_x);
 
   /*height*/
-  --ht: unset; /*height, height*/
-  --ht_n: unset; /*min height, min-height*/
-  --ht_x: unset; /*max height, max-height*/
+  --ht: unset; /*height*/
+  height: var(--ht);
+  --ht_n: unset; /*min height*/
+  min-height: var(--ht_n);
+  --ht_x: unset; /*max height*/
+  max-height: var(--ht_x);
 
   /*font*/
-  --ft_z: 1rem; /*font size, font-size*/
-  --ft_f: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; /*font family, font-family*/
-  --ft_s: normal; /*font style, font-style*/
-  --ft_w: normal; /*font weight, font-weight*/
+  --ft_z: 1rem; /*font size*/
+  font-size: var(--ft_z);
+  --ft_f: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; /*font family*/
+  font-family: var(--ft_f);
+  --ft_s: normal; /*font style*/
+  font-style: var(--ft_s);
+  --ft_w: normal; /*font weight*/
+  font-weight: var(--ft_w);
 
-  /*directions*/
-  --dn: start; /*directions, directions*/
+  /*direction*/
+  --dn: inherit; /*direction*/
+  direction: var(--pn);
 
   /*text*/
-  --tt_a: start; /*text align, text-align*/
-  --tt_i: 0; /*text indent, text-indent*/
-  --tt_o: clip; /*text overflow, text-overflow*/
-  --tt_c: normal; /*text space, white-space*/
-  --tt_w: normal; /*text wrap, word-wrap*/
-  --tt_b: normal; /*text break, word-break*/
+  --tt_a: start; /*text align*/
+  text-align: var(--tt_a);
+  --tt_i: 0; /*text indent*/
+  text-indent: var(--tt_i);
+  --tt_o: clip; /*text overflow*/
+  text-overflow: var(--tt_o);
+  --tt_c: normal; /*text space*/
+  white-space: var(--tt_c);
+  --tt_w: normal; /*text wrap*/
+  word-wrap: var(--tt_w);
+  --tt_b: normal; /*text break*/
+  word-break: var(--tt_b);
 
   /*text decoration*/
-  --td_l: none; /*text decoration, text-direction-line*/
-  --td_s: solid; /*text decoration, text-direction-color*/
-  --td_c: transparent; /*text decoration, text-direction-color*/
-  --td_t: 1%; /*text decoration, text-direction-color*/
-  --td: var(--tt_d_l) var(--tt_d_s) var(--tt_d_c) var(--td_t); /*text decoration, text-direction*/
+  --td_l: none; /*lines*/
+  --td_s: solid; /*style*/
+  --td_c: transparent; /*color*/
+  --td_t: 1%; /*thickness*/
+  --td: var(--tt_d_l) var(--tt_d_s) var(--tt_d_c) var(--td_t); /*text decoration*/
+  text-decoration: var(--td);
 
   /*color*/
   --cr: inherit; /*color*/
+  color: var(--cr);
 
   /*background color*/
-  --bd_c: transparent; /*background color, background-color*/
+  --bd_c: transparent; /*background color*/
+  background-color: var(--bd_c);
 
   /*background image*/
-  --bd_i: transparent; /*background image, background-image*/
+  --bd_i: transparent; /*background image*/
+  background-image: var(--bd_i);
 
   /*border*/
   --br_t: 0; /*border top width*/
   --br_r: 0; /*border right width*/
   --br_b: 0; /*border bottom width*/
   --br_l: 0; /*border left width*/
-  --br_w: var(--br_t) var(--br_r) var(--br_b) var(--br_l); /*border width, border-width*/
-  --br_s: solid; /*border style, border-style*/
-  --br_c: transparent; /*border color, border-color*/
+  --br_w: var(--br_t) var(--br_r) var(--br_b) var(--br_l); /*border width*/
+  border-width: var(--br_w);
+  --br_s: solid; /*border style*/
+  border-style: var(--br_s);
+  --br_c: transparent; /*border color*/
+  border-color: var(--br_c);
 
   /*radius*/
-  --rs_t: 0; /*radius top left*/
-  --rs_r: 0; /*radius top right*/
-  --rs_b: 0; /*radius bottom right*/
-  --rs_l: 0; /*radius bottom left*/
-  --rs: var(--rs_t) var(--rs_r) var(--rs_b) var(--rs_l); /*radius, border-radius*/
+  --rs_tl: 0; /*radius top left*/
+  --rs_tr: 0; /*radius top right*/
+  --rs_br: 0; /*radius bottom right*/
+  --rs_bl: 0; /*radius bottom left*/
+  --rs: var(--rs_tl) var(--rs_tr) var(--rs_br) var(--rs_bl); /*radius*/
+  border-radius: var(--rs);
 
   /*shadow*/
   --sh_t: ; /*shadow type*/
@@ -123,54 +157,86 @@ input {
   --sh_v: 0; /*shadow offset vertical*/
   --sh_s: 0; /*shadow spread*/
   --sh_c: transparent; /*shadow color*/
-  --sh: var(--sh_t) var(--sh_h) var(--sh_v) var(--sh_s) var(--sh_c); /*shadow, box-shadow*/
+  --sh: var(--sh_t) var(--sh_h) var(--sh_v) var(--sh_s) var(--sh_c); /*shadow*/
+  box-shadow: var(--sh);
 
   /*padding*/
   --pg_t: 0; /*padding top*/
   --pg_r: 0; /*padding right*/
   --pg_b: 0; /*padding bottom*/
   --pg_l: 0; /*padding left*/
-  --pg: var(--pg_t) var(--pg_r) var(--pg_b) var(--pg_l); /*padding, padding*/
+  --pg: var(--pg_t) var(--pg_r) var(--pg_b) var(--pg_l); /*padding*/
+  padding: var(--pg);
 
   /*margin*/
   --mn_t: 0; /*margin top*/
   --mn_r: 0; /*margin right*/
   --mn_b: 0; /*margin bottom*/
   --mn_l: 0; /*margin left*/
-  --mn: var(--mn_t) var(--mn_r) var(--mn_b) var(--mn_l); /*margin, margin*/
+  --mn: var(--mn_t) var(--mn_r) var(--mn_b) var(--mn_l); /*margin*/
+  margin: var(--mn);
+
+  /*flex flow*/
+  --ff_d: row; /*flex direction*/
+  --ff_w: nowrap; /*flex wrap*/
+  --ff: var(--ff_d) var(--ff_w);
+  flex-flow: var(--ff);
+
+  /*content align*/
+  --ca_m: flex-start; /*content main*/
+  justify-content: var(--al_cm);
+  --ca_c: flex-start; /*content cross*/
+  align-content: var(--al_cc);
+
+  /*item align*/
+  --ia_m: stretch; /*item main*/
+  justify-items: var(--al_im);
+  --ia_c: stretch; /*item cross*/
+  align-items: var(--al_ic);
 
   /*flex*/
-  --fx_f: row; /*flex flow, flex-direction*/
-  --fx_w: nowrap; /*flex wrap, flex-wrap*/
-  --fx_c_m: flex-start; /*content main, justify-content*/
-  --fx_c_c: flex-start; /*content cross, align-content*/
-  --fx_i_m: stretch; /*item main, justify-items*/
-  --fx_i_c: stretch; /*item cross, align-items*/
+  --fx_g: unset; /*flex grow*/
+  --fx_s: unset; /*flex shrink*/
+  --fx_b: unset; /*flex basis*/
+  --fx: var(--fx_g) var(--fx_s) var(--fx_b);
+  flex: var(--fx);
 
   /*grid*/
-  --gd_tr: auto; /*grid template rows, grid-template-rows*/
-  --gd_tc: auto; /*grid template columns, grid-template-columns*/
-  --gd_r: 1/1; /*grid row, grid-row*/
-  --gd_c: 1/1; /*grid column, grid-column*/
+  --gd_tr: auto; /*grid template rows*/
+  grid-template-rows: var(--gd_tr);
+  --gd_tc: auto; /*grid template columns*/
+  grid-template-columns: var(--gd_tc);
+  --gd_r: 1/1; /*grid row*/
+  grid-row: var(--gd_r);
+  --gd_c: 1/1; /*grid column*/
+  grid-column: var(--gd_c);
 
   /*gap*/
-  --gp_r: 0; /*gap row, row-gap*/
-  --gp_c: 0; /*gap column, column-gap*/
+  --gp_r: 0; /*gap row*/
+  row-gap: var(--gp_r);
+  --gp_c: 0; /*gap column*/
+  column-gap: var(--gp_c);
 
   /*object*/
-  --ob_f: contain; /*object fit, object-fit*/
-  --ob_p: center; /*object position, object-position*/
+  --ob_f: contain; /*object fit*/
+  object-fit: var(--ob_f);
+  --ob_p: center; /*object position*/
+  object-position: var(--ob_p);
 
   /*mouse events*/
-  --me_e: auto; /*mouse events, pointer-events*/
+  --me_e: auto; /*mouse events*/
+  pointer-events: var(--me_e);
 
   /*cursor*/
-  --cu: auto; /*cursor, cursor*/
+  --cu: auto; /*cursor*/
+  cursor: var(--cu);
 
   /*user select*/
-  --us: none; /*user select, user-select*/
+  --us: none; /*user select*/
+  user-select: var(--us);
 
   /*opacity*/
-  --op: none; /*opacity, opacity*/
+  --op: none; /*opacity*/
+  opacity: var(--op);
 }
 /*=======================*/

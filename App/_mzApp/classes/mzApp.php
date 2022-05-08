@@ -56,6 +56,7 @@ class mzApp
         <link rel="icon" href="" id="mztab-icon">
         <!-- _mzApp -->
         <script src="_assets/_mzApp/js/mzFunctions.js"></script>
+        <script src="_assets/_mzApp/js/mzData.js"></script>
         <script src="_assets/_mzApp/js/mzApp.js"></script>
         <script src="_assets/_mzApp/js/mzUI.js"></script>
         <script src="_assets/_mzApp/js/mzWidgets.js"></script>
