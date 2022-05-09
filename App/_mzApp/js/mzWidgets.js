@@ -22,6 +22,7 @@
 class mzWidget {
   id = mzApp.getId();
   element = null;
+  parent = null;
   children = [];
   classes = {};
   styles = {};
@@ -88,14 +89,20 @@ class mzWidget {
     document.mzEvent("mzsetup");
     return this.element;
   }
-  //
+  // == inner functions
+  setParent(widget) {
+    this.parent = widget;
+    return this;
+  }
   renderChildren() {
     this.element.innerHTML = ""; // children
     if (this.children) {
-      for (let value of this.children) {
-        if (value) {
-          if (value instanceof mzWidget) this.element.append(value.state());
-          else this.element.append(value);
+      for (let child of this.children) {
+        if (child) {
+          if (child instanceof mzWidget) {
+            child.setParent(this);
+            this.element.append(child.state());
+          } else this.element.append(child);
         }
       }
     }
@@ -114,7 +121,7 @@ class mzWidget {
           this.classes[key] = style.classes[key];
         }
         for (let key in style.styles) {
-          this.styles[key] = style.styles[key];
+          this.styles[`--${key}`] = style.styles[key];
         }
       }
     }
@@ -173,7 +180,7 @@ class mzScaffold extends mzWidget {
     bottomBar = null,
     drawer = null,
     body = null,
-    background = mzBackgroundUI.set("#eee"),
+    background = mzBackgroundUI.set(mzColorData.white.brightness(-0.1)),
   }) {
     super();
     this.element = document.createElement("mzscaffold");
@@ -193,12 +200,21 @@ class mzContainer extends mzWidget {
     border = mzBorderUI.none,
     radius = mzRadiusUI.all(1),
     shadow = mzShadowUI.elevate(1),
-    background = mzBackgroundUI.set("#fff"),
+    background = mzBackgroundUI.set(mzColorData.white),
   }) {
     super();
     this.element = document.createElement("mzcontainer");
     this.children = [child];
-    //this.styling = [size, padding, margin, border, radius, shadow, background];
+    this.styling = [
+      width,
+      height,
+      padding,
+      margin,
+      border,
+      radius,
+      shadow,
+      background,
+    ];
   }
 }
 
@@ -227,28 +243,26 @@ class mzFlex extends mzWidget {
   constructor({
     children = null,
     shrink = false,
-    wrap = false,
-    rowGap = 0,
-    columnGap = 0,
-    flow = mzFlexFlowUI.row,
-    mainContentAlign = mzMainAlignUI.start,
-    crossContentAlign = mzCrossAlignUI.start,
-    mainItemAlign = mzMainAlignUI.stretch,
-    crossItemAlign = mzMainAlignUI.stretch,
+    gap = mzFlexGapwUI.none,
+    wrap = mzFlexWrapUI.nowrap,
+    direction = mzFlexFlowUI.column,
+    contentMainAlign = mzContentMainAlignUI.start,
+    contentCrossAlign = mzContentCrossAlignUI.start,
+    itemMainAlign = mzItemMainAlignUI.stretch,
+    itemCrossAlign = mzItemCrossAlignUI .stretch,
   }) {
     super();
     this.element = document.createElement("mzflex");
     this.children = children;
     this.classes["shrink"] = shrink;
-    this.classes["wrap"] = wrap;
-    this.styles["--rgp"] = `${mzUI.num(rowGap)}rem`;
-    this.styles["--cgp"] = `${mzUI.num(columnGap)}rem`;
     this.styling = [
-      flow,
-      mainContentAlign,
-      crossContentAlign,
-      mainItemAlign,
-      crossItemAlign,
+      gap,
+      wrap,
+      direction,
+      contentMainAlign,
+      contentCrossAlign,
+      itemMainAlign,
+      itemCrossAlign,
     ];
   }
 }

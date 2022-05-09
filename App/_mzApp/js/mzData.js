@@ -1,56 +1,45 @@
 /*=========================*/
 // mzData class: for all const data and user custom data
 class mzData {
+  data = {};
   value = null;
 
   constructor() {}
-
-  value() {
-    return this.value;
-  }
 }
 /*=========================*/
 // mzColorData class: has const colors and user custom colors
 class mzColorData extends mzData {
-  rgb = [0, 0, 0];
-
   constructor(red = 0, green = 0, blue = 0, opacity = 1) {
     super();
-    this.rgba[0] = red.mzClamp(0, 255).mzRound();
-    this.rgba[1] = green.mzClamp(0, 255).mzRound();
-    this.rgba[2] = blue.mzClamp(0, 255).mzRound();
-    this.rgba[3] = opacity.mzClamp(0, 1).mzRound();
+    this.data.r = red.mzClamp(0, 255).mzRound();
+    this.data.g = green.mzClamp(0, 255).mzRound();
+    this.data.b = blue.mzClamp(0, 255).mzRound();
+    this.data.o = opacity.mzClamp(0, 1).mzRound(2);
+    //
+    this.value =
+      this.data.o < 1
+        ? `rgba(${this.data.r},${this.data.g},${this.data.b},${this.data.o})`
+        : `rgb(${this.data.r},${this.data.g},${this.data.b})`;
   }
 
   brightness(brightness = 0) {
-    let rgb = [0, 0, 0];
-    //
     let change = brightness.mzFromPercentage(0, 255, 1);
-    let diff = (Math.max(...this.rgba) + change - 255).mzClamp(0, 255);
-    //
-    rgb[0] = (this.rgba[0] + (this.rgba[0] == 0 ? diff : change))
-      .mzClamp(0, 255)
-      .mzRound();
-    rgb[1] = (this.rgba[1] + (this.rgba[1] == 0 ? diff : change))
-      .mzClamp(0, 255)
-      .mzRound();
-    rgb[2] = (this.rgba[2] + (this.rgba[2] == 0 ? diff : change))
-      .mzClamp(0, 255)
-      .mzRound();
-    //
-    return `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`;
+    let diff = (
+      Math.max(this.data.r, this.data.g, this.data.b) +
+      change -
+      255
+    ).mzClamp(0, 255);
+
+    return new mzColorData(
+      this.data.r + (this.data.r == 0 ? diff : change),
+      this.data.g + (this.data.g == 0 ? diff : change),
+      this.data.b + (this.data.b == 0 ? diff : change),
+      this.data.o
+    );
   }
 
   opacity(opacity = 1) {
-    return `rgba(${this.rgba[0]},${this.rgba[1]},${this.rgba[2]},${opacity
-      .mzClamp(0, 1)
-      .mzRound(2)})`;
-  }
-
-  value() {
-    if (this.rgba[3] < 1)
-      return `rgba(${this.rgba[0]},${this.rgba[1]},${this.rgba[2]},${this.rgba[3]})`;
-    return `rgb(${this.rgba[0]},${this.rgba[1]},${this.rgba[2]})`;
+    return new mzColorData(this.data.r, this.data.g, this.data.b, opacity);
   }
 
   static black = new mzColorData(0, 0, 0);
@@ -208,33 +197,20 @@ class mzColorData extends mzData {
   */
 }
 /*=========================*/
-// mzMainContentAlignData class: has const data
-class mzContentMainData extends mzData {
+// mzLineStyleData class: has const data and WIP
+class mzLineStyleData extends mzData {
   constructor(value) {
     super();
     this.value = value;
   }
-  static start = new mzContentMainData("flex-start");
-  static end = new mzContentMainData("flex-end");
-  static center = new mzContentMainData("center");
-  static around = new mzContentMainData("space-around");
-  static between = new mzContentMainData("space-between");
-  static evenly = new mzContentMainData("space-evenly");
+  static solid = new mzLineStyleData("solid");
 }
 /*=========================*/
-// mzMainContentAlignData class: has const data
-class mzContentCrossData extends mzData {
+// mzBorderTypeData class: has const data and WIP
+class mzBorderTypeData extends mzData {
   constructor(value) {
     super();
     this.value = value;
   }
-  static start = new mzContentCrossData("flex-start");
-  static end = new mzContentCrossData("flex-end");
-  static center = new mzContentCrossData("center");
-  static stretch = new mzContentCrossData("stretch");
-  static around = new mzContentCrossData("space-around");
-  static between = new mzContentCrossData("space-between");
-  static evenly = new mzContentCrossData("space-evenly");
+  static solid = new mzBorderTypeData("solid");
 }
-/*=========================*/
-// mzColorData class: has const colors and user custom colors

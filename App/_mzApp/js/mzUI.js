@@ -44,18 +44,12 @@ class mzPositionUI extends mzUI {
   }
 
   static default = new mzUI(this.setStyles("static"));
-
-  static relative = new mzUI(this.setStyles("relative"));
-
-  static fixed = new mzUI(this.setStyles("fixed"));
-
-  static absolute = new mzUI(this.setStyles("absolute"));
-
-  static relative = new mzUI(this.setStyles("relative"));
-
   static inherit = new mzUI(this.setStyles("inherit"));
-
   static initial = new mzUI(this.setStyles("initial"));
+  static relative = new mzUI(this.setStyles("relative"));
+  static fixed = new mzUI(this.setStyles("fixed"));
+  static absolute = new mzUI(this.setStyles("absolute"));
+  static relative = new mzUI(this.setStyles("relative"));
 }
 /*=========================*/
 class mzDisplayUI extends mzUI {
@@ -72,23 +66,16 @@ class mzDisplayUI extends mzUI {
   }
 
   static none = new mzUI(this.setStyles("none"));
-
+  static inherit = new mzUI(this.setStyles("inherit"));
+  static initial = new mzUI(this.setStyles("initial"));
   static inline = new mzUI(this.setStyles("inline"));
-
   static block = new mzUI(this.setStyles("block"));
   static inlineBlock = new mzUI(this.setStyles("inline-block"));
-
   static contents = new mzUI(this.setStyles("contents"));
-
   static flex = new mzUI(this.setStyles("flex"));
   static inlineFlex = new mzUI(this.setStyles("inline-flex"));
-
   static grid = new mzUI(this.setStyles("grid"));
   static inlineFrid = new mzUI(this.setStyles("inline-grid"));
-
-  static inherit = new mzUI(this.setStyles("inherit"));
-
-  static initial = new mzUI(this.setStyles("initial"));
 }
 /*=========================*/
 class mzOverflowUI extends mzUI {
@@ -105,20 +92,13 @@ class mzOverflowUI extends mzUI {
   }
 
   static none = new mzUI(this.setStyles());
-
-  static hidden = new mzUI(this.setStyles("hidden"));
-
-  static clip = new mzUI(this.setStyles("clip"));
-
-  static visible = new mzUI(this.setStyles("visible"));
-
-  static scroll = new mzUI(this.setStyles("scroll"));
-
-  static auto = new mzUI(this.setStyles("auto"));
-
   static inherit = new mzUI(this.setStyles("inherit"));
-
   static initial = new mzUI(this.setStyles("initial"));
+  static hidden = new mzUI(this.setStyles("hidden"));
+  static clip = new mzUI(this.setStyles("clip"));
+  static visible = new mzUI(this.setStyles("visible"));
+  static scroll = new mzUI(this.setStyles("scroll"));
+  static auto = new mzUI(this.setStyles("auto"));
 }
 /*=========================*/
 class mzWidthUI extends mzUI {
@@ -147,9 +127,7 @@ class mzWidthUI extends mzUI {
   }
 
   static none = new mzUI(this.setStyles());
-
   static inherit = new mzUI(this.setStyles("inherit", "inherit", "inherit"));
-
   static initial = new mzUI(this.setStyles("initial", "initial", "initial"));
 }
 /*=========================*/
@@ -179,9 +157,7 @@ class mzHeightUI extends mzUI {
   }
 
   static none = new mzUI(this.setStyles());
-
   static inherit = new mzUI(this.setStyles("inherit", "inherit", "inherit"));
-
   static initial = new mzUI(this.setStyles("initial", "initial", "initial"));
 }
 /*=========================*/
@@ -199,13 +175,9 @@ class mzDirectionUI extends mzUI {
   }
 
   static none = new mzUI(this.setStyles());
-
   static ltr = new mzUI(this.setStyles("ltr"));
-
   static rtl = new mzUI(this.setStyles("rtl"));
-
   static inherit = new mzUI(this.setStyles("inherit"));
-
   static initial = new mzUI(this.setStyles("initial"));
 }
 /*=========================*/
@@ -223,9 +195,7 @@ class mzFontSizeUI extends mzUI {
   }
 
   static none = new mzUI(this.setStyles());
-
   static inherit = new mzUI(this.setStyles("inherit"));
-
   static initial = new mzUI(this.setStyles("initial"));
 }
 /*=========================*/
@@ -243,9 +213,7 @@ class mzFontFamilyUI extends mzUI {
   }
 
   static none = new mzUI(this.setStyles());
-
   static inherit = new mzUI(this.setStyles("inherit"));
-
   static initial = new mzUI(this.setStyles("initial"));
 }
 /*=========================*/
@@ -263,16 +231,11 @@ class mzFontStyleUI extends mzUI {
   }
 
   static none = new mzUI(this.setStyles());
-
-  static normal = new mzUI(this.setStyles("normal"));
-
-  static italic = new mzUI(this.setStyles("italic"));
-
-  static oblique = new mzUI(this.setStyles("oblique"));
-
   static inherit = new mzUI(this.setStyles("inherit"));
-
   static initial = new mzUI(this.setStyles("initial"));
+  static normal = new mzUI(this.setStyles("normal"));
+  static italic = new mzUI(this.setStyles("italic"));
+  static oblique = new mzUI(this.setStyles("oblique"));
 }
 /*=========================*/
 class mzFontWeightUI extends mzUI {
@@ -289,38 +252,22 @@ class mzFontWeightUI extends mzUI {
   }
 
   static none = new mzUI(this.setStyles());
-
-  static normal = new mzUI(this.setStyles("normal"));
-
-  static bold = new mzUI(this.setStyles("bold"));
-
-  static bolder = new mzUI(this.setStyles("bolder"));
-
-  static light = new mzUI(this.setStyles("light"));
-
-  static lighter = new mzUI(this.setStyles("lighter"));
-
-  static w100 = new mzUI(this.setStyles("100"));
-
-  static w200 = new mzUI(this.setStyles("200"));
-
-  static w300 = new mzUI(this.setStyles("300"));
-
-  static w400 = new mzUI(this.setStyles("400"));
-
-  static w500 = new mzUI(this.setStyles("500"));
-
-  static w600 = new mzUI(this.setStyles("600"));
-
-  static w700 = new mzUI(this.setStyles("700"));
-
-  static w800 = new mzUI(this.setStyles("800"));
-
-  static w900 = new mzUI(this.setStyles("900"));
-
   static inherit = new mzUI(this.setStyles("inherit"));
-
   static initial = new mzUI(this.setStyles("initial"));
+  static normal = new mzUI(this.setStyles("normal"));
+  static bold = new mzUI(this.setStyles("bold"));
+  static bolder = new mzUI(this.setStyles("bolder"));
+  static light = new mzUI(this.setStyles("light"));
+  static lighter = new mzUI(this.setStyles("lighter"));
+  static w100 = new mzUI(this.setStyles("100"));
+  static w200 = new mzUI(this.setStyles("200"));
+  static w300 = new mzUI(this.setStyles("300"));
+  static w400 = new mzUI(this.setStyles("400"));
+  static w500 = new mzUI(this.setStyles("500"));
+  static w600 = new mzUI(this.setStyles("600"));
+  static w700 = new mzUI(this.setStyles("700"));
+  static w800 = new mzUI(this.setStyles("800"));
+  static w900 = new mzUI(this.setStyles("900"));
 }
 /*=========================*/
 class mzTextAlignUI extends mzUI {
@@ -384,11 +331,9 @@ class mzTextDecorationUI extends mzUI {
   }
 
   static none = new mzUI(this.setStyles());
-
   static inherit = new mzUI(
     this.setStyles("inherit", "inherit", "inherit", "inherit")
   );
-
   static initial = new mzUI(
     this.setStyles("initial", "initial", "initial", "initial")
   );
@@ -400,7 +345,7 @@ class mzColorUI extends mzUI {
   }
 
   static setStyles(cr = null) {
-    return { cr: cr instanceof mzColorData ? cr.value() : cr };
+    return { cr: cr instanceof mzColorData ? cr.value : cr };
   }
 
   static set(color = null) {
@@ -408,12 +353,9 @@ class mzColorUI extends mzUI {
   }
 
   static none = new mzUI(this.setStyles());
-
-  static transparent = new mzUI(this.setStyles("transparent"));
-
   static inherit = new mzUI(this.setStyles("inherit"));
-
   static initial = new mzUI(this.setStyles("initial"));
+  static transparent = new mzUI(this.setStyles("transparent"));
 }
 /*=========================*/
 class mzBackgroundUI extends mzUI {
@@ -422,7 +364,7 @@ class mzBackgroundUI extends mzUI {
   }
 
   static setStyles(bd_c = null) {
-    return { bd_c: bd_c instanceof mzColorData ? bd_c.value() : bd_c };
+    return { bd_c: bd_c instanceof mzColorData ? bd_c.value : bd_c };
   }
 
   static set(color = null) {
@@ -430,12 +372,9 @@ class mzBackgroundUI extends mzUI {
   }
 
   static none = new mzUI(this.setStyles());
-
-  static transparent = new mzUI(this.setStyles("transparent"));
-
   static inherit = new mzUI(this.setStyles("inherit"));
-
   static initial = new mzUI(this.setStyles("initial"));
+  static transparent = new mzUI(this.setStyles("transparent"));
 }
 /*=========================*/
 class mzBorderUI extends mzUI {
@@ -463,7 +402,7 @@ class mzBorderUI extends mzUI {
   ) {
     return {
       br_s: br_s,
-      br_c: br_c instanceof mzColorData ? br_c.value() : br_c,
+      br_c: br_c instanceof mzColorData ? br_c.value : br_c,
       br_t: br_t,
       br_r: br_r,
       br_b: br_b,
@@ -547,7 +486,6 @@ class mzBorderUI extends mzUI {
   }
 
   static none = new mzUI(this.setStyles());
-
   static inherit = new mzUI(
     this.setStyles(
       "inherit",
@@ -558,7 +496,6 @@ class mzBorderUI extends mzUI {
       "inherit"
     )
   );
-
   static initial = new mzUI(
     this.setStyles(
       "initial",
@@ -661,11 +598,9 @@ class mzRadiusUI extends mzUI {
   }
 
   static none = new mzUI(this.setStyles());
-
   static inherit = new mzUI(
     this.setStyles("inherit", "inherit", "inherit", "inherit")
   );
-
   static initial = new mzUI(
     this.setStyles("initial", "initial", "initial", "initial")
   );
@@ -675,13 +610,6 @@ class mzShadowUI extends mzUI {
   constructor() {
     super();
   }
-
-  static data = {
-    style: {
-      outward: null,
-      inward: "inset",
-    },
-  };
 
   static setStyles(
     sh_t = null,
@@ -695,18 +623,26 @@ class mzShadowUI extends mzUI {
       sh_h: sh_h,
       sh_v: sh_v,
       sh_s: sh_s,
-      sh_c: sh_c instanceof mzColorData ? sh_c.value() : sh_c,
+      sh_c: sh_c instanceof mzColorData ? sh_c.value : sh_c,
     };
   }
 
-  static elevate(
-    value = 1,
-    color = mzColorData.black.opacity(0.25),
-    type = mzShadowUI.data.outward
-  ) {
+  static elevate(value = 1, color = mzColorData.black.opacity(0.25)) {
     return new mzUI(
       this.setStyles(
-        type,
+        null,
+        null,
+        `${mzUI.num(value, 2)}rem`,
+        `${mzUI.num(value, 0.6)}rem`,
+        color
+      )
+    );
+  }
+
+  static elevateInset(value = 1, color = mzColorData.black.opacity(0.25)) {
+    return new mzUI(
+      this.setStyles(
+        "inset",
         null,
         `${mzUI.num(value, 2)}rem`,
         `${mzUI.num(value, 0.6)}rem`,
@@ -716,11 +652,9 @@ class mzShadowUI extends mzUI {
   }
 
   static none = new mzUI(this.setStyles());
-
   static inherit = new mzUI(
     this.setStyles("inherit", "inherit", "inherit", "inherit", "inherit")
   );
-
   static initial = new mzUI(
     this.setStyles("initial", "initial", "initial", "initial", "initial")
   );
@@ -785,11 +719,9 @@ class mzPaddingUI extends mzUI {
   }
 
   static none = new mzUI(this.setStyles());
-
   static inherit = new mzUI(
     this.setStyles("inherit", "inherit", "inherit", "inherit")
   );
-
   static initial = new mzUI(
     this.setStyles("initial", "initial", "initial", "initial")
   );
@@ -854,11 +786,9 @@ class mzMarginUI extends mzUI {
   }
 
   static none = new mzUI(this.setStyles());
-
   static inherit = new mzUI(
     this.setStyles("inherit", "inherit", "inherit", "inherit")
   );
-
   static initial = new mzUI(
     this.setStyles("initial", "initial", "initial", "initial")
   );
@@ -869,103 +799,160 @@ class mzFlexFlowUI extends mzUI {
     super();
   }
 
-  static data = {
-    direction: {
-      row: "row",
-      column: "column",
-      rowReverse: "row-reverse",
-      columnReverse: "column-reverse",
-    },
-    wrap: {
-      wrap: "wrap",
-      nowrap: "nowrap",
-    },
-  };
-
-  static setStyles(ff_d = null, ff_w = null) {
-    return { ff_d: ff_d, ff_w: ff_w };
-  }
-
-  static set(direction, wrap) {
-    return new mzUI(this.setStyles(direction, wrap));
-  }
-
-  static none = new mzUI(this.setStyles());
-
-  static inherit = new mzUI(this.setStyles("inherit", "inherit"));
-
-  static initial = new mzUI(this.setStyles("initial", "initial"));
-}
-/*=========================*/
-class mzContentAlignUI extends mzUI {
-  constructor() {
-    super();
-  }
-
-  static setStyles(ca_m = null, ca_c = null) {
+  static setStyles(ff_d = null) {
     return {
-      ca_m: ca_m instanceof mzContentMainData ? ca_m.value() : ca_m,
-      ca_c: ca_c instanceof mzContentCrossData ? ca_c.value() : ca_c,
+      ff_d: ff_d,
     };
   }
 
-  static set(
-    mainAxis = mzContentMainData.start,
-    crossAxis = mzContentCrossData.start
-  ) {
-    return new mzUI(this.setStyles(mainAxis, crossAxis));
-  }
-
   static none = new mzUI(this.setStyles());
-
-  static inherit = new mzUI(this.setStyles("inherit", "inherit"));
-
-  static initial = new mzUI(this.setStyles("initial", "initial"));
+  static inherit = new mzUI(this.setStyles("inherit"));
+  static initial = new mzUI(this.setStyles("initial"));
+  static row = new mzUI(this.setStyles("row"));
+  static column = new mzUI(this.setStyles("column"));
+  static rowReverse = new mzUI(this.setStyles("row-reverse"));
+  static columnReverse = new mzUI(this.setStyles("column-reverse"));
 }
 /*=========================*/
-class mzItemAlignUI extends mzUI {
+class mzFlexWrapUI extends mzUI {
   constructor() {
     super();
   }
 
-  static data = {
-    main: {
-      start: "flex-start",
-      end: "flex-end",
-      center: "center",
-      around: "space-around",
-      between: "space-between",
-      evenly: "space-evenly",
-    },
-    cross: {
-      start: "flex-start",
-      end: "flex-end",
-      center: "center",
-      stretch: "stretch",
-      around: "space-around",
-      between: "space-between",
-      evenly: "space-evenly",
-    },
-  };
-
-  static setStyles(ia_m = null, ia_c = null) {
-    return { ia_m: ia_m, ia_c: ia_c };
-  }
-
-  static set(
-    mainAxis = mzItemAlignUI.data.main.start,
-    crossAxis = mzItemAlignUI.data.cross.start
-  ) {
-    return new mzUI(this.setStyles(mainAxis, crossAxis));
+  static setStyles(ff_w = null) {
+    return {
+      ff_w: ff_w,
+    };
   }
 
   static none = new mzUI(this.setStyles());
+  static inherit = new mzUI(this.setStyles("inherit"));
+  static initial = new mzUI(this.setStyles("initial"));
+  static wrap = new mzUI(this.setStyles("wrap"));
+  static nowrap = new mzUI(this.setStyles("nowrap"));
+}
+/*=========================*/
+class mzFlexGapwUI extends mzUI {
+  constructor() {
+    super();
+  }
 
+  static setStyles(gp_r = null, gp_c = null) {
+    return {
+      gp_r: gp_r,
+      gp_c: gp_c,
+    };
+  }
+
+  static value(row = 0, column = 0) {
+    return new mzUI(
+      this.setStyles(`${mzUI.num(row)}rem`, `${mzUI.num(column)}rem`)
+    );
+  }
+
+  static percent(row = 0, column = 0) {
+    return new mzUI(
+      this.setStyles(`${mzUI.num(row, 0)}%`, `${mzUI.num(column, 0)}%`)
+    );
+  }
+
+  static none = new mzUI(this.setStyles());
   static inherit = new mzUI(this.setStyles("inherit", "inherit"));
-
   static initial = new mzUI(this.setStyles("initial", "initial"));
 }
+/*=========================*/
+class mzContentMainAlignUI extends mzUI {
+  constructor() {
+    super();
+  }
 
+  static setStyles(ca_m = null) {
+    return {
+      ca_m: ca_m,
+    };
+  }
+
+  static none = new mzUI(this.setStyles());
+  static inherit = new mzUI(this.setStyles("inherit"));
+  static initial = new mzUI(this.setStyles("initial"));
+  static start = new mzUI(this.setStyles("flex-start"));
+  static end = new mzUI(this.setStyles("flex-end"));
+  static center = new mzUI(this.setStyles("center"));
+  static around = new mzUI(this.setStyles("space-around"));
+  static between = new mzUI(this.setStyles("space-between"));
+  static evenly = new mzUI(this.setStyles("space-evenly"));
+}
+/*=========================*/
+class mzContentCrossAlignUI extends mzUI {
+  constructor() {
+    super();
+  }
+
+  static setStyles(ca_c = null) {
+    return {
+      ca_c: ca_c,
+    };
+  }
+
+  static none = new mzUI(this.setStyles());
+  static inherit = new mzUI(this.setStyles("inherit"));
+  static initial = new mzUI(this.setStyles("initial"));
+  static start = new mzUI(this.setStyles("flex-start"));
+  static end = new mzUI(this.setStyles("flex-end"));
+  static center = new mzUI(this.setStyles("center"));
+  static stretch = new mzUI(this.setStyles("stretch"));
+  static around = new mzUI(this.setStyles("space-around"));
+  static between = new mzUI(this.setStyles("space-between"));
+  static evenly = new mzUI(this.setStyles("space-evenly"));
+}
+/*=========================*/
+class mzItemMainAlignUI extends mzUI {
+  constructor() {
+    super();
+  }
+
+  static setStyles(ia_m = null) {
+    return {
+      ia_m: ia_m,
+    };
+  }
+
+  static none = new mzUI(this.setStyles());
+  static inherit = new mzUI(this.setStyles("inherit"));
+  static initial = new mzUI(this.setStyles("initial"));
+  static start = new mzUI(this.setStyles("flex-start"));
+  static end = new mzUI(this.setStyles("flex-end"));
+  static center = new mzUI(this.setStyles("center"));
+  static baseline = new mzUI(this.setStyles("baseline"));
+  static stretch = new mzUI(this.setStyles("stretch"));
+  static around = new mzUI(this.setStyles("space-around"));
+  static between = new mzUI(this.setStyles("space-between"));
+  static evenly = new mzUI(this.setStyles("space-evenly"));
+}
+/*=========================*/
+class mzItemCrossAlignUI extends mzUI {
+  constructor() {
+    super();
+  }
+
+  static setStyles(ia_c = null) {
+    return {
+      ia_c: ia_c,
+    };
+  }
+
+  static none = new mzUI(this.setStyles());
+  static inherit = new mzUI(this.setStyles("inherit"));
+  static initial = new mzUI(this.setStyles("initial"));
+  static start = new mzUI(this.setStyles("flex-start"));
+  static end = new mzUI(this.setStyles("flex-end"));
+  static center = new mzUI(this.setStyles("center"));
+  static baseline = new mzUI(this.setStyles("baseline"));
+  static stretch = new mzUI(this.setStyles("stretch"));
+}
+
+/*=========================*/
+/*=========================*/
 /*=========================*/
 class mzFlexExpandUI extends mzUI {
   constructor() {
