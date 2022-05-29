@@ -1,14 +1,19 @@
+import * as mzAPP from "./mzApp.js";
+import * as mzSTYLE from "./mzStyle.js";
+import * as mzTHEME from "./mzTheme.js";
+import * as mzWIDGET from "./mzWidget.js";
+import * as mzCONTROLLER from "./mzController.js";
 /*=========================*/
-// mzData class: for all const data and user custom data
-class mzData {
+// Data class: for all const data and user custom data
+export class Data {
   data = {};
-  value = null;
 
   constructor() {}
 }
 /*=========================*/
-// mzColorData class: has const colors and user custom colors
-class mzColorData extends mzData {
+// Data Color class: has const colors and user custom colors
+export class Color extends Data {
+  color = "#000";
   constructor(red = 0, green = 0, blue = 0, opacity = 1) {
     super();
     this.data.r = red.mzClamp(0, 255).mzRound();
@@ -16,7 +21,7 @@ class mzColorData extends mzData {
     this.data.b = blue.mzClamp(0, 255).mzRound();
     this.data.o = opacity.mzClamp(0, 1).mzRound(2);
     //
-    this.value =
+    this.color =
       this.data.o < 1
         ? `rgba(${this.data.r},${this.data.g},${this.data.b},${this.data.o})`
         : `rgb(${this.data.r},${this.data.g},${this.data.b})`;
@@ -30,7 +35,7 @@ class mzColorData extends mzData {
       255
     ).mzClamp(0, 255);
 
-    return new mzColorData(
+    return new Color(
       this.data.r + (this.data.r == 0 ? diff : change),
       this.data.g + (this.data.g == 0 ? diff : change),
       this.data.b + (this.data.b == 0 ? diff : change),
@@ -39,11 +44,11 @@ class mzColorData extends mzData {
   }
 
   opacity(opacity = 1) {
-    return new mzColorData(this.data.r, this.data.g, this.data.b, opacity);
+    return new Color(this.data.r, this.data.g, this.data.b, opacity);
   }
 
-  static black = new mzColorData(0, 0, 0);
-  static white = new mzColorData(255, 255, 255);
+  static black = new Color(0, 0, 0);
+  static white = new Color(255, 255, 255);
 
   /*
   AliceBlue	F0F8FF	240,248,255
@@ -197,20 +202,67 @@ class mzColorData extends mzData {
   */
 }
 /*=========================*/
-// mzLineStyleData class: has const data and WIP
-class mzLineStyleData extends mzData {
-  constructor(value) {
+// Data Number class: has const numbers and user custom numbers
+export class Num extends Data {
+  num = "";
+  constructor(num = "auto") {
     super();
-    this.value = value;
+    this.num = num;
   }
-  static solid = new mzLineStyleData("solid");
+
+  static value(num = 0) {
+    return new Num(`${num}rem`);
+  }
+
+  static percent(num = 0) {
+    return new Num(`${num}%`);
+  }
+
+  static fraction(num = 0) {
+    return new Num(`${num}fr`);
+  }
+
+  static auto = new Num("auto");
+  static maxContent = new Num("auto");
+  static minContent = new Num("auto");
 }
 /*=========================*/
-// mzBorderTypeData class: has const data and WIP
-class mzBorderTypeData extends mzData {
-  constructor(value) {
+// Data Icon class: has const Icons and user custom Icons
+export class Icon extends Data {
+  text = "";
+  family = "";
+  constructor(text, family) {
     super();
-    this.value = value;
+    //
+    this.text = text;
+    this.family = family;
   }
-  static solid = new mzBorderTypeData("solid");
+
+  static search = new Icon("search", "");
+}
+/*=========================*/
+// Data LineStyle class: has const data
+export class LineStyle extends Data {
+  style = "";
+  constructor(style) {
+    super();
+    this.style = style;
+  }
+  static solid = new LineStyle("solid");
+  static double = new LineStyle("double");
+  static dotted = new LineStyle("dotted");
+  static dashed = new LineStyle("dashed");
+  static wavy = new LineStyle("wavy");
+}
+/*=========================*/
+// Data LineType class: has const data
+export class LineType extends Data {
+  type = "";
+  constructor(type) {
+    super();
+    this.type = type;
+  }
+  static underline = new LineType("underline");
+  static overline = new LineType("overline");
+  static lineThrough = new LineType("line-through");
 }

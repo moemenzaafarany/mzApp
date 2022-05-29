@@ -1,3 +1,4 @@
+"use strict";
 //========================== mzEvent
 window.mzEvent = function (
   name,
@@ -73,11 +74,18 @@ Document.prototype.mzFindParent = HTMLElement.prototype.mzFindParent =
     }
     return null;
   };
-//========================== mzGenerate
-Array.prototype.mzGenerate = function (callback = (i, val) => null) {
+//========================== mzGenerateList
+Array.prototype.mzGenerateList = function (callback = (i, val) => null) {
   let list = [];
   for (let i = 0; i < this.length; i++) {
     list.push(callback(i, this[i]));
+  }
+  return list;
+};
+Map.prototype.mzGenerateList = function (callback = (key, val) => null) {
+  let list = [];
+  for (let key in this) {
+    list.push(callback(key, this[key]));
   }
   return list;
 };
@@ -85,20 +93,27 @@ Array.prototype.mzGenerate = function (callback = (i, val) => null) {
 Number.prototype.mzClamp = function (min = 0, max = 0) {
   return Math.min(max, Math.max(this.valueOf(), min));
 };
-
 Number.prototype.mzPercentage = function (min = 0, max = 0, percent = 100) {
   return ((this.valueOf() - min) / max) * percent;
 };
-
 Number.prototype.mzFromPercentage = function (min = 0, max = 0, percent = 100) {
   return (max - min) * (this.valueOf() / percent);
 };
-
 Number.prototype.mzRound = function (decimals = 0) {
   return +this.valueOf().toFixed(decimals);
 };
-
-//========================== Event Listners
+//========================== mzFunctions
+function mzTypeOf(variable, type) {
+  if (!variable) return false;
+  return typeof variable == type;
+}
+function mzInstanceOf(variable, instance) {
+  return variable instanceof instance;
+}
+function mzIf(condition = null, forTrue = null, forFalse = null) {
+  return condition ? forTrue : forFalse;
+}
+//========================== Imports
 /*
 (function () {
   function mzFormField(evt, target) {

@@ -1,8 +1,13 @@
-//========================== Controller
-class mzController {}
-
+import * as mzAPP from "./mzApp.js";
+import * as mzSTYLE from "./mzStyle.js";
+import * as mzTHEME from "./mzTheme.js";
+import * as mzDATA from "./mzData.js";
+import * as mzWIDGET from "./mzWidget.js";
+/*=========================*/
+// ui class: for all ui of widgets
+export class Controller {}
 //========================== Form Field
-class mzFormController extends mzController {
+export class Form extends Controller {
   constructor({ validator = null, onchange = null }) {
     super();
     this.validator = validator;
@@ -39,9 +44,8 @@ class mzFormController extends mzController {
     return this.error || this.validator(this.value);
   }
 }
-
 //========================== Form Field
-class mzFieldController extends mzController {
+export class Field extends Controller {
   constructor({ validator = null, onchange = null }) {
     super();
     this.validator = validator;

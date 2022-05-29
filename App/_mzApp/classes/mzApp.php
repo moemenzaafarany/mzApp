@@ -39,40 +39,4 @@ class mzApp
             file_put_contents(mzApp::LIB_FILE, file_get_contents(mzApp::LIB_CONTENT));
         }
     }
-
-    //====================================// run
-    static public function run(): void
-    {
-        echo '
-<!DOCTYPE html>
-<html lang="en" mzroute="' . mzApp::$URL_ROUTE . '">
-    <head>
-        <base href="' . mzApp::$URL_BASE . '">
-        <!-- meta -->
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title></title>
-        <link rel="icon" href="" id="mztab-icon">
-        <!-- _mzApp -->
-        <script src="_assets/_mzApp/js/mzFunctions.js"></script>
-        <script src="_assets/_mzApp/js/mzData.js"></script>
-        <script src="_assets/_mzApp/js/mzApp.js"></script>
-        <script src="_assets/_mzApp/js/mzUI.js"></script>
-        <script src="_assets/_mzApp/js/mzWidgets.js"></script>
-        <script src="_assets/_mzApp/js/mzControllers.js"></script>
-        <link rel="stylesheet" href="_assets/_mzApp/css/main.css" />
-        <!-- myApp -->
-        <script type="module" src="_assets/lib/main.js"></script>
-    </head>
-
-    <body>
-        <mzroot></mzroot>
-        <mzmodals></mzmodals>
-    </body>
-</html>';
-        exit();
-    }
-    //========================================// end Class
-
 }

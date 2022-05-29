@@ -1,3 +1,10 @@
+import * as mzAPP from "./mzApp.js";
+import * as mzSTYLE from "./mzStyle.js";
+import * as mzTHEME from "./mzTheme.js";
+import * as mzDATA from "./mzData.js";
+import * as mzCONTROLLER from "./mzController.js";
+/*=========================*/
+// ui class: for all ui of widgets
 (function () {
   function focus(event, target) {
     document
@@ -17,10 +24,9 @@
     focus(event, event.target);
   });
 })();
-
-//========================== mzWidget
-class mzWidget {
-  id = mzApp.getId();
+//========================== widget
+export class Widget {
+  id = mzAPP.App.getId();
   element = null;
   parent = null;
   children = [];
@@ -55,8 +61,8 @@ class mzWidget {
       for (let i in this.children) {
         if (typeof this.children[i] === typeof children[i]) {
           if (
-            this.children[i] instanceof mzWidget &&
-            children[i] instanceof mzWidget
+            mzInstanceOf(this.children[i], Widget) &&
+            mzInstanceOf(children[i], Widget)
           ) {
             if (this.children[i].constructor === children[i].constructor) {
               this.children[i].defaultStyling = children[i].defaultStyling;
@@ -91,32 +97,26 @@ class mzWidget {
   }
   // == inner functions
   setParent(widget) {
-    this.parent = widget;
+    if (mzInstanceOf(widget, Widget)) this.parent = widget;
     return this;
   }
   renderChildren() {
     this.element.innerHTML = ""; // children
     if (this.children) {
-      for (let child of this.children) {
-        if (child) {
-          if (child instanceof mzWidget) {
-            child.setParent(this);
-            this.element.append(child.state());
-          } else this.element.append(child);
+      for (let widget of this.children) {
+        if (widget) {
+          if (mzInstanceOf(widget, Widget)) {
+            this.element.append(widget.setParent(this).state());
+          } else this.element.append(widget);
         }
       }
     }
   }
   //
   renderElement() {
-    //this.element.removeAttribute("class");
-    this.element.removeAttribute("style");
-    //for (let attr of this.element.attributes) {
-    //  this.element.removeAttribute(attr);
-    //}
     // styling
     for (let style of this.styling) {
-      if (style instanceof mzUI) {
+      if (mzInstanceOf(style, mzSTYLE.Style)) {
         for (let key in style.classes) {
           this.classes[key] = style.classes[key];
         }
@@ -128,36 +128,43 @@ class mzWidget {
     // classes
     for (let key in this.classes) {
       if (key) {
-        if (this.classes[key]) this.element.classList.add(key);
-        else this.element.classList.remove(key);
+        let exists = this.element.classList.contains(key);
+        if (this.classes[key] && !exists) this.element.classList.add(key);
+        else if (exists) this.element.classList.remove(key);
       }
     }
     // styles
+    let currStyles = window.getComputedStyle(this.element);
     for (let key in this.styles) {
-      if (this.styles[key])
+      let equal = currStyles[key] == this.styles[key];
+      if (this.styles[key] && !equal)
         this.element.style.setProperty(key, this.styles[key]);
-      else this.element.style.removeProperty(key);
+      else if (!equal) this.element.style.removeProperty(key);
     }
     // attributes
     this.attributes["id"] = this.id;
     for (let attr in this.attributes) {
-      if (this.attributes[attr])
+      let equal = this.element.getAttribute(attr) == this.attributes[attr];
+      if (this.attributes[attr] && !equal)
         this.element.setAttribute(attr, this.attributes[attr]);
-      else this.element.removeAttribute(attr);
+      else if (!equal) this.element.removeAttribute(attr);
     }
     // node attributes
     for (let attr in this.nodeAttrs) {
-      this.element[attr] = this.nodeAttrs[attr];
+      let equal = this.element[attr] == this.nodeAttrs[attr];
+      if (this.attributes[attr] && !equal)
+        this.element[attr] = this.nodeAttrs[attr];
+      else if (!equal) this.element[attr] = this.nodeAttrs[attr];
     }
   }
   //
-  findFirstChild(type = mzWidget) {
+  findFirstChild(type = Widget) {
     return recursiveSearch(this.children);
 
     function recursiveSearch(children = []) {
       let child = null;
       for (let el of children) {
-        if (el instanceof type) {
+        if (mzInstanceOf(el, type)) {
           child = el;
           break;
         }
@@ -165,61 +172,69 @@ class mzWidget {
       if (child) return child;
       else {
         for (let el of children) {
-          if (el && el instanceof mzWidget) return recursiveSearch(el.children);
+          if (el && mzInstanceOf(el, Widget))
+            return recursiveSearch(el.children);
         }
       }
+      return null;
+    }
+  }
+  //
+  findFirstParent(type = Widget) {
+    return recursiveSearch(this.parent);
+
+    function recursiveSearch(widget) {
+      let parent = null;
+      if (mzInstanceOf(widget, type)) {
+        parent = widget;
+      }
+      if (parent) return parent;
+      else recursiveSearch(widget.parent);
       return null;
     }
   }
 }
 
 //========================== Scaffold
-class mzScaffold extends mzWidget {
+export class Scaffold extends Widget {
   constructor({
     appBar = null,
     bottomBar = null,
     drawer = null,
     body = null,
-    background = mzBackgroundUI.set(mzColorData.white.brightness(-0.1)),
+    theme = null,
   }) {
     super();
     this.element = document.createElement("mzscaffold");
     this.children = [appBar, bottomBar, drawer, body];
-    this.styling = [background];
+    if (mzInstanceOf(theme, mzTHEME.Scaffold)) theme = new mzTHEME.Scaffold({});
+    this.styling = [theme.BackColor];
   }
 }
 
 //========================== Container
-class mzContainer extends mzWidget {
-  constructor({
-    child = null,
-    width = mzWidthUI.none,
-    height = mzHeightUI.none,
-    padding = mzPaddingUI.all(1),
-    margin = mzMarginUI.all(1),
-    border = mzBorderUI.none,
-    radius = mzRadiusUI.all(1),
-    shadow = mzShadowUI.elevate(1),
-    background = mzBackgroundUI.set(mzColorData.white),
-  }) {
+export class Container extends Widget {
+  constructor({ child = null, theme = null }) {
     super();
     this.element = document.createElement("mzcontainer");
     this.children = [child];
+    if (!mzInstanceOf(theme, mzTHEME.Container))
+      theme = new mzTHEME.Container({});
     this.styling = [
-      width,
-      height,
-      padding,
-      margin,
-      border,
-      radius,
-      shadow,
-      background,
+      theme.Width,
+      theme.Height,
+      theme.Padding,
+      theme.Margin,
+      theme.Border,
+      theme.Radius,
+      theme.Shadow,
+      theme.BackColor,
     ];
   }
 }
 
 //========================== Container
-class mzScroll extends mzWidget {
+export class Scroll extends Widget {
   constructor({ child = null, overflowX = true, overflowY = true }) {
     super();
     this.element = document.createElement("mzscroll");
@@ -230,7 +245,7 @@ class mzScroll extends mzWidget {
 }
 
 //========================== Divider
-class mzDivider extends mzWidget {
+export class Divider extends Widget {
   constructor({ border = mzBorderUI.all(1, "solid", "#333") }) {
     super();
     this.element = document.createElement("mzdivider");
@@ -239,17 +254,17 @@ class mzDivider extends mzWidget {
 }
 
 //========================== Flex
-class mzFlex extends mzWidget {
+export class Flex extends Widget {
   constructor({
     children = null,
     shrink = false,
-    gap = mzFlexGapwUI.none,
+    gap = mzFlexGapUI.none,
     wrap = mzFlexWrapUI.nowrap,
     direction = mzFlexFlowUI.column,
     contentMainAlign = mzContentMainAlignUI.start,
     contentCrossAlign = mzContentCrossAlignUI.start,
     itemMainAlign = mzItemMainAlignUI.stretch,
-    itemCrossAlign = mzItemCrossAlignUI .stretch,
+    itemCrossAlign = mzItemCrossAlignUI.stretch,
   }) {
     super();
     this.element = document.createElement("mzflex");
@@ -267,8 +282,36 @@ class mzFlex extends mzWidget {
   }
 }
 
+//========================== Grid
+export class Grid extends Widget {
+  constructor({
+    children = null,
+    columns = 2,
+    shrink = false,
+    gap = mzFlexGapUI.none,
+    contentMainAlign = mzContentMainAlignUI.start,
+    contentCrossAlign = mzContentCrossAlignUI.start,
+    itemMainAlign = mzItemMainAlignUI.stretch,
+    itemCrossAlign = mzItemCrossAlignUI.stretch,
+  }) {
+    super();
+    this.element = document.createElement("mzgrid");
+    this.children = children;
+    this.classes["shrink"] = shrink;
+    this.styling = [
+      mzGridColumnsUI.fraction(columns, 1),
+      mzGridRowsUI.fraction(Math.ceil(children.length / columns), 1),
+      gap,
+      contentMainAlign,
+      contentCrossAlign,
+      itemMainAlign,
+      itemCrossAlign,
+    ];
+  }
+}
+
 //========================== Expand
-class mzExpand extends mzWidget {
+export class Expand extends Widget {
   constructor({ child = null, grow = 1, shrink = null, basis = null }) {
     super();
     this.element = document.createElement("mzexpand");
@@ -278,7 +321,7 @@ class mzExpand extends mzWidget {
 }
 
 //========================== Stack
-class mzStack extends mzWidget {
+export class Stack extends Widget {
   constructor({
     children = null,
     mainAlignment = mzMainAlign.start,
@@ -292,7 +335,7 @@ class mzStack extends mzWidget {
 }
 
 //========================== Positioned
-class mzPositioned extends mzWidget {
+export class Positioned extends Widget {
   constructor({ child = null, grow = 1, shrink = null, basis = null }) {
     super();
     this.element = document.createElement("mzpositioned");
@@ -301,45 +344,26 @@ class mzPositioned extends mzWidget {
   }
 }
 
-//========================== Grid
-class mzGrid extends mzWidget {
-  constructor({
-    children = null,
-    columns = 2,
-    rowGap = 1,
-    columnGap = 1,
-    mainAlignment = mzMainAlign.start,
-    crossAlignment = mzCrossAlign.start,
-    wrapAlignment = mzWrapAlign.start,
-  }) {
-    super();
-    this.element = document.createElement("mzgrid");
-    this.children = children;
-    this.styles["--gtrs"] = `repeat(${Math.ceil(
-      children.length / columns
-    )},1fr)`;
-    this.styles["--gtcs"] = `repeat(${columns}, 1fr)`;
-    this.styles["--rgp"] = `${mzUI.num(rowGap)}rem`;
-    this.styles["--cgp"] = `${mzUI.num(columnGap)}rem`;
-    this.styling = [mainAlignment, crossAlignment, wrapAlignment];
-  }
-}
-
 //========================== Center
-class mzCenter extends mzWidget {
+export class Center extends Widget {
   constructor({ child = null }) {
     super();
     this.element = document.createElement("mzcenter");
     this.children = [child];
+    this.styling = [
+      //     mzSTYLE.
+    ];
   }
 }
 
 //========================== Button
-class mzButton extends mzWidget {
+export class Button extends Widget {
   constructor({
     child = null,
     disabled = false,
     onclick = null,
+    theme = null,
+    /*
     padding = mzPaddingUI.symmetric(2.5, 5),
     margin = mzMarginUI.all(1),
     radius = mzRadiusUI.all(1),
@@ -349,13 +373,15 @@ class mzButton extends mzWidget {
     border = mzBorderUI.none,
     hoverColor = mzColorUI.set("#fff"),
     hoverBackground = mzBackgroundUI.set("#333"),
-    hoverBorder = mzBorderUI.none,
+    hoverBorder = mzBorderUI.none,*/
   }) {
     super();
-    this.element = document.createElement("mzbutton");
+    this.element = document.createElement("button");
     this.children = [child];
     this.classes["disabled"] = disabled;
-    this.nodeAttrs = { onclick: !disabled ? onclick : null };
+    this.nodeAttrs = {
+      onclick: mzIf(!disabled, onclick),
+    };
     //
     // this.styles["--h-cr"] = hoverColor.styles["--cr"];
     // this.styles["--h-bcr"] = hoverBackground.styles["--bcr"];
@@ -368,23 +394,31 @@ class mzButton extends mzWidget {
 }
 
 //========================== Text
-class mzText extends mzWidget {
-  constructor({
-    text = "",
-    fontSize = 16,
-    align = null, //mzTextAlign.start,
-    overflow = null, //mzTextOverflow.wrap,
-    color = mzColorUI.set("#333"),
-  }) {
+export class Text extends Widget {
+  constructor({ text = "", theme = new mzTHEME.Text({}) }) {
     super();
     this.element = document.createElement("mztext");
-    this.nodeAttrs = { innerText: text, fontSize: mzUI.num(fontSize) };
-    this.styling = [align, overflow, color];
+    this.nodeAttrs = {
+      innerText: text,
+    };
+
+    if (!mzInstanceOf(theme, mzTHEME.Text)) theme = new mzTHEME.Text({});
+    this.styling = [
+      theme.FontSize,
+      theme.FontFamily,
+      theme.FontStyle,
+      theme.FontWeight,
+      theme.TextAlign,
+      theme.TextDecoration,
+      theme.TextOverflow,
+      theme.Direction,
+      theme.ForeColor,
+    ];
   }
 }
 
 //========================== Icon
-class mzIcon extends mzWidget {
+export class Icon extends Widget {
   constructor({
     icon = "",
     align = mzTextAlign.start,
@@ -393,13 +427,15 @@ class mzIcon extends mzWidget {
     super();
     this.element = document.createElement("mzicon");
     this.classes[align] = true;
-    this.nodeAttrs = { innerText: icon };
+    this.nodeAttrs = {
+      innerText: icon,
+    };
     this.styling = [color];
   }
 }
 
 //========================== Image
-class mzImage extends mzWidget {
+export class Image extends Widget {
   constructor({
     src = "",
     fit = mzObjectFit.none,
@@ -408,12 +444,18 @@ class mzImage extends mzWidget {
     super();
     this.element = document.createElement("mzimage");
     //
-    this.children = [new mzImg({ src: src, fit: fit, position: position })];
+    this.children = [
+      new Img({
+        src: src,
+        fit: fit,
+        position: position,
+      }),
+    ];
   }
 }
 
 //========================== Img
-class mzImg extends mzWidget {
+class Img extends Widget {
   constructor({
     src,
     fit = mzObjectFit.none,
@@ -429,7 +471,7 @@ class mzImg extends mzWidget {
 }
 
 //========================== loader
-class mzLoader extends mzWidget {
+export class Loader extends Widget {
   constructor({ child = null, loading = false }) {
     super();
     this.element = document.createElement("mzloader");
@@ -438,233 +480,8 @@ class mzLoader extends mzWidget {
   }
 }
 
-//========================== Tab View
-class mzTabView extends mzWidget {
-  constructor({ child = null }) {
-    super();
-    this.element = document.createElement("mztabview");
-    this.children = [child];
-  }
-}
-
-//========================== Tab View
-class mzTabBar extends mzWidget {
-  constructor({ children = null }) {
-    super();
-    this.element = document.createElement("mztabbar");
-    this.children = children;
-  }
-}
-
-//========================== Tab View
-class mzTabContent extends mzWidget {
-  constructor({ children = null }) {
-    super();
-    this.element = document.createElement("mztabcontent");
-    this.children = children;
-  }
-}
-
-/*
-//========================== Form Label
-class mzFormLabel extends mzWidget {
-  constructor({ text = "" }) {
-    super();
-    this.element = document.createElement("mzformlabel");
-    this.nodeAttrs = {
-      innerText: text,
-    };
-  }
-}
-
-//========================== Form Error
-class mzFormError extends mzWidget {
-  constructor({ text = "" }) {
-    super();
-    this.element = document.createElement("mzformerror");
-    this.nodeAttrs = {
-      innerText: text,
-    };
-  }
-}
-
-//========================== Form Field
-class mzFormField extends mzWidget {
-  constructor({
-    formGroup = null,
-    controller = new mzFormController(),
-    disabled = false,
-    label = "",
-    hint = "",
-    animatedLabel = true,
-    radius = mzRadiusUI.all(2),
-    border = mzBorderUI.all(1, mzData.borderType.solid, "#333"),
-    color = mzColorUI.set("#333"),
-    background = mzBackgroundUI.set("#FFF"),
-    focusColor = mzColorUI.set("#00F"),
-    errorColor = mzColorUI.set("#F00"),
-  }) {
-    super();
-    this.element = document.createElement("mzformfield");
-
-    this.data.label = label;
-    this.data.controller = controller;
-    this.data.hint = hint;
-
-    this.children = this.build();
-    this.styles["--bwh"] = border.styles["--bwh"];
-    this.styles["--cr"] = color.styles["--cr"];
-    this.styles["--f-brr"] = focusColor.styles["--cr"];
-    this.styles["--e-brr"] = errorColor.styles["--cr"];
-    this.styles["--e-cr"] = errorColor.styles["--cr"];
-    this.classes["label"] = !animatedLabel && label;
-    this.classes["labelless"] = !label;
-    this.classes["disabled"] = disabled;
-    this.styling = [radius, border, color, background];
-
-    controller.setWidget(this, () => this.setState());
-  }
-
-  build() {
-    return [
-      new mzFormLabel({ text: this.data.label }),
-      new mzFieldInput({
-        controller: this.data.controller,
-        hint: this.data.hint,
-      }),
-      new mzFormError({
-        text: this.data.controller.getError(),
-      }),
-    ];
-  }
-}
-
-//========================== Field Input
-class mzFieldInput extends mzWidget {
-  constructor({ controller = null, hint = "", shadow = mzShadowUI.inset(1) }) {
-    super();
-    this.element = document.createElement("input");
-    this.attributes = {
-      value: controller.value,
-      error: controller.getError(),
-      placeholder: hint,
-    };
-    this.nodeAttrs = {
-      value: controller.value,
-    };
-    this.styling = [shadow];
-
-    if (controller) {
-      this.nodeAttrs["onchange"] = this.nodeAttrs["onkeyup"] = (evt) => {
-        controller.setValue(evt.target.value);
-      };
-    }
-  }
-}
-
-//========================== Form Select
-class mzFormSelect extends mzWidget {
-  constructor({
-    formGroup = null,
-    controller = new mzFormController(),
-    animatedLabel = true,
-    multiple = false,
-    disabled = false,
-    label = "",
-    hint = "",
-    options = null,
-    radius = mzRadiusUI.all(2),
-    border = mzBorderUI.all(1, mzData.borderType.solid, "#333"),
-    color = mzColorUI.set("#333"),
-    background = mzBackgroundUI.set("#FFF"),
-    focusColor = mzColorUI.set("#00F"),
-    errorColor = mzColorUI.set("#F00"),
-  }) {
-    super();
-    this.element = document.createElement("mzformselect");
-
-    this.data.label = label;
-    this.data.controller = controller;
-    this.data.hint = hint;
-    this.data.options = options;
-
-    this.children = this.build();
-    this.styles["--bwh"] = border.styles["--bwh"];
-    this.styles["--cr"] = color.styles["--cr"];
-    this.styles["--f-brr"] = focusColor.styles["--cr"];
-    this.styles["--e-brr"] = errorColor.styles["--cr"];
-    this.styles["--e-cr"] = errorColor.styles["--cr"];
-    this.classes["label"] = !animatedLabel && label;
-    this.classes["labelless"] = !label;
-    this.classes["disabled"] = disabled;
-    this.styling = [radius, border, color, background];
-
-    controller.setWidget(this, () => this.setState());
-  }
-
-  build() {
-    return [
-      new mzFormLabel({ text: this.data.label }),
-      new mzSelectValue({
-        controller: this.data.controller,
-        hint: this.data.hint,
-      }),
-      new mzFormError({
-        text: this.data.controller.getError(),
-      }),
-      new mzSelectList({ children: this.data.options }),
-    ];
-  }
-}
-
-//========================== Field List
-class mzSelectValue extends mzWidget {
-  constructor({ controller = null, hint = null, shadow = mzShadowUI.inset(1) }) {
-    super();
-    this.element = document.createElement("mzselectvalue");
-    this.attributes = {
-      value: controller.value,
-      error: controller.getError(),
-      placeholder: hint,
-    };
-    this.styling = [shadow];
-    if (controller.data.child) this.children = [controller.data.child];
-  }
-}
-
-//========================== Field List
-class mzSelectList extends mzWidget {
-  constructor({ children = null }) {
-    super();
-    this.element = document.createElement("mzselectlist");
-    this.children = children;
-  }
-}
-
-//========================== Field Option
-class mzSelectOption extends mzWidget {
-  constructor({
-    controller = new mzFormController(),
-    value = null,
-    child = null,
-  }) {
-    super();
-    this.element = document.createElement("mzselectoption");
-    this.attributes = {
-      value: value,
-    };
-    this.nodeAttrs = {
-      onclick: () => {
-        controller.setValue(value, { child: this.element.cloneNode(true) });
-      },
-    };
-    this.children = [child];
-  }
-}
-*/
-
 //========================== Label
-class mzLabel extends mzWidget {
+class Label extends Widget {
   constructor({ text = "" }) {
     super();
     this.element = document.createElement("mzlabel");
@@ -675,7 +492,7 @@ class mzLabel extends mzWidget {
 }
 
 //========================== Hint
-class mzHint extends mzWidget {
+class Hint extends Widget {
   constructor({ text = "" }) {
     super();
     this.element = document.createElement("mzhint");
@@ -686,7 +503,7 @@ class mzHint extends mzWidget {
 }
 
 //========================== Value
-class mzValue extends mzWidget {
+class Value extends Widget {
   constructor({ child = null }) {
     super();
     this.element = document.createElement("mzvalue");
@@ -695,7 +512,7 @@ class mzValue extends mzWidget {
 }
 
 //========================== Error
-class mzError extends mzWidget {
+class Error extends Widget {
   constructor({ text = "" }) {
     super();
     this.element = document.createElement("mzerror");
@@ -706,7 +523,7 @@ class mzError extends mzWidget {
 }
 
 //========================== Error
-class mzInput extends mzWidget {
+class Input extends Widget {
   constructor({ controller = null }) {
     super();
     this.element = document.createElement("input");
@@ -724,7 +541,7 @@ class mzInput extends mzWidget {
 }
 
 //========================== Field
-class mzFieldInput extends mzWidget {
+export class FieldInput extends Widget {
   constructor({
     formController = null,
     controller = new mzFieldController({}),
@@ -790,12 +607,18 @@ class mzFieldInput extends mzWidget {
     this.classes["error"] = !!this.data.controller.getError();
     this.classes["disabled"] = this.data.disabled;
     return [
-      new mzLabel({ text: this.data.label }),
-      new mzHint({ text: this.data.hint }),
-      new mzValue({
-        child: new mzInput({ controller: this.data.controller }),
+      new label({
+        text: this.data.label,
       }),
-      new mzError({
+      new hint({
+        text: this.data.hint,
+      }),
+      new value({
+        child: new input({
+          controller: this.data.controller,
+        }),
+      }),
+      new error({
         text: this.data.controller.getError(),
       }),
     ];
